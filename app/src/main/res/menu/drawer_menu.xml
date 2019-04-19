@@ -8,6 +8,10 @@
             android:icon="@drawable/ic_add_event"
             android:title="Dodaj wydarzenie" />
         <item
+            android:id="@+id/my_events"
+            android:icon="@drawable/ic_my_events"
+            android:title="Moje wydarzenia" />
+        <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_settings"
             android:title="Ustawienia" />
