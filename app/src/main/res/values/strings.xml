@@ -2,4 +2,7 @@
     <string name="app_name">Eventer</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="scan_desc_text">Press Scan button in order to scan a barcode or QR code&#8230;</string>
+    <string name="scan_text">Scan</string>
+    <string name="scan_result">Scan result</string>
 </resources>
