@@ -23,7 +23,7 @@
             <item
                 android:id="@+id/share_event"
                 android:icon="@drawable/ic_share_event"
-                android:title="Dołącz do wydarzenia" />
+                android:title="Udostępnij wydarzenie" />
             <item
                 android:id="@+id/join_event"
                 android:icon="@drawable/ic_join_event"
