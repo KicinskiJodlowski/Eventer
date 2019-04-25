@@ -66,14 +66,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.join_event:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new JoinFragment()).commit();
-                IntentIntegrator integrator = new IntentIntegrator(this);
-                integrator.setOrientationLocked(false);
-                integrator.setPrompt("Scan Event Code");
-                //do wyłączenie później
-                integrator.setBeepEnabled(true);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-                integrator.setBarcodeImageEnabled(true);
-                integrator.initiateScan();
+//                IntentIntegrator integrator = new IntentIntegrator(this);
+//                integrator.setOrientationLocked(false);
+//                integrator.setPrompt("Scan Event Code");
+//                //do wyłączenie później
+//                integrator.setBeepEnabled(true);
+//                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+//                integrator.setBarcodeImageEnabled(true);
+//                integrator.initiateScan();
                 break;
             case R.id.share_event:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();

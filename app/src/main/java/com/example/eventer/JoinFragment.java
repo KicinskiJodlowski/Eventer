@@ -17,9 +17,17 @@ public class JoinFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+        IntentIntegrator integrator = new IntentIntegrator(getActivity());
+        integrator.setOrientationLocked(false);
+        integrator.setPrompt("Scan Event Code");
+        //do wyłączenie później
+        integrator.setBeepEnabled(true);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        integrator.setBarcodeImageEnabled(true);
+        integrator.initiateScan();
         return inflater.inflate(R.layout.join_event_fragment, container, false);
     }
+
 
 
 }
