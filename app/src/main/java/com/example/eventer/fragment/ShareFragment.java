@@ -1,4 +1,4 @@
-package com.example.eventer;
+package com.example.eventer.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.eventer.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;

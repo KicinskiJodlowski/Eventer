@@ -1,4 +1,4 @@
-package com.example.eventer;
+package com.example.eventer.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,18 +14,21 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.eventer.fragment.AddEventFragment;
+import com.example.eventer.fragment.JoinFragment;
+import com.example.eventer.fragment.MyEventsFragment;
+import com.example.eventer.MyHandler;
+import com.example.eventer.R;
+import com.example.eventer.RegistrationIntentService;
+import com.example.eventer.fragment.SettingsFragment;
+import com.example.eventer.fragment.ShareFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.microsoft.windowsazure.notifications.NotificationsManager;
-import android.content.Intent;
+
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEvents()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
             navigationView.setCheckedItem(R.id.my_events);
         }
     }
@@ -78,10 +80,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.add_event:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddEvent()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddEventFragment()).commit();
                 break;
             case R.id.my_events:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEvents()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
                 break;
             case R.id.join_event:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new JoinFragment()).commit();
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 TextToQrCode("Tajny tekst testowy");
                 break;
             case R.id.settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new Settings()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

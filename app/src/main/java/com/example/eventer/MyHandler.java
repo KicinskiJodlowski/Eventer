@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+
+import com.example.eventer.activity.MainActivity;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
 import com.microsoft.windowsazure.notifications.NotificationsManager;
 
