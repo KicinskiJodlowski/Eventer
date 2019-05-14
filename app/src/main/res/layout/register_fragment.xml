@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".fragment.LoginFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.LoginFragment">
 
     <LinearLayout
         android:layout_width="366dp"
-        android:layout_height="375dp"
+        android:layout_height="420dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
@@ -32,7 +32,6 @@ tools:context=".fragment.LoginFragment">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="false"
                 android:text="Sign In" />
 
             <Button
@@ -40,6 +39,7 @@ tools:context=".fragment.LoginFragment">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="false"
                 android:text="Register" />
         </LinearLayout>
 
@@ -52,9 +52,24 @@ tools:context=".fragment.LoginFragment">
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:text="Rafal" />
+            android:hint="Login"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/fullNameText"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/mailText"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="e-mail"
+            android:inputType="textEmailAddress" />
 
         <EditText
             android:id="@+id/passwordText"
@@ -65,9 +80,16 @@ tools:context=".fragment.LoginFragment">
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
-            android:text="Rafal12345@"
             tools:layout_conversion_wrapHeight="118"
             tools:layout_conversion_wrapWidth="560" />
+
+        <TextView
+            android:id="@+id/passwordRepeatText"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Repeat Password"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/loginButton"
@@ -77,18 +99,8 @@ tools:context=".fragment.LoginFragment">
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Loguj" />
+            android:text="Rejestruj" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Logowanko"
-            tools:layout_conversion_wrapHeight="50"
-            tools:layout_conversion_wrapWidth="247" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
