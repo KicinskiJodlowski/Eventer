@@ -31,7 +31,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddEventFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    Button btnDatePick, btnTimePick, btnAddEvent;
+    Button btnDatePick, btnTimePick, btnAddPhoto;
     int day, month, year, hour, minute;
 
     ImageView imageEvent;
@@ -54,11 +54,11 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
         super.onViewCreated(view, savedInstanceState);
 
         imageEvent = getActivity().findViewById(R.id.imageEvent);
-        btnAddEvent = getActivity().findViewById(R.id.btnAddEvent);
+        btnAddPhoto = getActivity().findViewById(R.id.btnAddPhoto);
         btnDatePick = getActivity().findViewById(R.id.eventStartDate);
         btnTimePick = getActivity().findViewById(R.id.eventStartTime);
 
-        btnAddEvent.setOnClickListener(new View.OnClickListener() {
+        btnAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGallery();
