@@ -1,15 +1,19 @@
 package com.example.eventer.fragment;
 
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.eventer.R;
 import com.example.eventer.adapter.CustomAdapter;
@@ -48,14 +52,43 @@ public class MyEventsFragment extends Fragment {
         CustomEvent event2 = new CustomEvent(2, "Piknik WCY", "11/06/2019 15:00",
                 "Chlanie piwa, wódki itp itd", 2);
 
+        CustomEvent event3 = new CustomEvent(2, "Piknik WCY", "11/06/2019 15:00",
+                "Chlanie piwa, wódki itp itd", 2);
+
+        CustomEvent event4 = new CustomEvent(2, "Piknik WCY", "11/06/2019 15:00",
+                "Chlanie piwa, wódki itp itd", 2);
+
+        CustomEvent event5 = new CustomEvent(2, "Piknik WCY", "11/06/2019 15:00",
+                "Chlanie piwa, wódki itp itd", 2);
+
         listEvents = new ArrayList<>();
         listEvents.add(event1);
         listEvents.add(event2);
+        listEvents.add(event3);
+        listEvents.add(event4);
+        listEvents.add(event5);
+
 
         CustomAdapter adapter = new CustomAdapter(getActivity(), R.layout.event_record, listEvents);
         listViewEvents.setAdapter(adapter);
-;
+        listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
+                FragmentTransaction ft =  getActivity().getSupportFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                EventDetailsFragment detailsFragment = new EventDetailsFragment();
 
+                Bundle arg = new Bundle();
+                arg.putSerializable("event", listEvents.get(position));
+
+                detailsFragment.setArguments(arg);
+                ft.replace(R.id.fragment_container, detailsFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EventDetailsFragment()).commit();
+            }
+        });
     }
 }

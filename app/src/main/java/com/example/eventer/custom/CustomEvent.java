@@ -1,9 +1,12 @@
 package com.example.eventer.custom;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
-public class CustomEvent {
+public class CustomEvent implements Serializable {
 
     int eventID;
     String eventTitle;
