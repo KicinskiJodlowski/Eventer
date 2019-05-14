@@ -54,7 +54,7 @@ public class MyEventsFragment extends Fragment {
 
         CustomAdapter adapter = new CustomAdapter(getActivity(), R.layout.event_record, listEvents);
         listViewEvents.setAdapter(adapter);
-
+;
 
 
     }
