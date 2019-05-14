@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.eventer.R;
 import com.example.eventer.custom.CustomEvent;
@@ -53,6 +54,11 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         btnDate.setText(eventD.getEventStartDate().substring(0, eventD.getEventStartDate().indexOf(' ')));
         btnTime.setText(eventD.getEventStartDate().substring(eventD.getEventStartDate().indexOf(' ')));
 
+        if(eventD.getEventFounderID() == 1)
+        {
+            btnEdit.setVisibility(View.VISIBLE);
+            //btnSave.setVisibility(View.GONE);
+        }
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +69,35 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 btnDate.setEnabled(true);
                 btnTime.setEnabled(true);
 
+                btnEdit.setVisibility(View.GONE);
+                btnSave.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                eventTitle.setEnabled(false);
+                eventDesc.setEnabled(false);
+                btnDate.setEnabled(false);
+                btnTime.setEnabled(false);
+
+                btnEdit.setVisibility(View.VISIBLE);
+                btnSave.setVisibility(View.GONE);
+
+                for (CustomEvent event: MyEventsFragment.listEvents)
+                {
+                    if(event.getEventID() == eventD.getEventID()) {
+
+                        event.setEventTitle(eventTitle.getText().toString());
+                        event.setEventDesc(eventDesc.getText().toString());
+                        event.setEventStartDate(btnDate.getText().toString() + " " + btnTime.getText().toString());
+                        Toast.makeText(getActivity(),"Zmiany zostały zapisane",Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
 

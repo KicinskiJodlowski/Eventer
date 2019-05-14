@@ -75,19 +75,19 @@ public class MyEventsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                FragmentTransaction ft =  getActivity().getSupportFragmentManager().beginTransaction();
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                EventDetailsFragment detailsFragment = new EventDetailsFragment();
+            FragmentTransaction ft =  getActivity().getSupportFragmentManager().beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            EventDetailsFragment detailsFragment = new EventDetailsFragment();
 
-                Bundle arg = new Bundle();
-                arg.putSerializable("event", listEvents.get(position));
+            Bundle arg = new Bundle();
+            arg.putSerializable("event", listEvents.get(position));
 
-                detailsFragment.setArguments(arg);
-                ft.replace(R.id.fragment_container, detailsFragment);
-                ft.addToBackStack(null);
-                ft.commit();
+            detailsFragment.setArguments(arg);
+            ft.replace(R.id.fragment_container, detailsFragment);
+            ft.addToBackStack(null);
+            ft.commit();
 
-                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EventDetailsFragment()).commit();
+            //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EventDetailsFragment()).commit();
             }
         });
     }
