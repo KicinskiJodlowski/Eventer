@@ -34,7 +34,7 @@ public class InitialActivity extends AppCompatActivity {
     }
 
     private boolean checkTokenIsValid() {
-        return false;
+        return true;
     }
 
 
