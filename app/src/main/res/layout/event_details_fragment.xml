@@ -102,6 +102,14 @@
                 android:fadeScrollbars="true"/>
 
             <Button
+                android:id="@+id/btnShowGuests"
+                android:text="Pokaż uczestników"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+            <Button
                 android:id="@+id/btnEdit"
                 android:text="Edytuj"
                 android:backgroundTint="@android:color/holo_green_dark"
