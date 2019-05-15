@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.eventer.R;
-import com.example.eventer.custom.CustomEvent;
 import com.example.eventer.fragment.MyEventsFragment;
 import com.example.eventer.model.EventModel;
 
@@ -37,8 +36,6 @@ public class CustomAdapter extends ArrayAdapter<EventModel> {
         String title = getItem(position).getEventName();
         String date = getItem(position).getDateOfEvent();
         String desc = getItem(position).getDescription();
-
-        //CustomEvent event = new CustomEvent(title,date,desc);
 
         LayoutInflater inflater = LayoutInflater.from(con);
         convertView = inflater.inflate(res, parent, false);

@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.example.eventer.R;
 import com.example.eventer.RetrofitClient;
 import com.example.eventer.adapter.CustomAdapter;
-import com.example.eventer.custom.CustomEvent;
 import com.example.eventer.model.EventModel;
 
 import java.text.ParseException;
@@ -52,21 +51,6 @@ public class MyEventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         listViewEvents = getActivity().findViewById(R.id.listViewEvents);
-
-        CustomEvent event1 = new CustomEvent(1,"MegaWAT", "10/05/2019 17:00",
-                "Najlepsze juwenalia w Warszawie, dwa dni, dziesięć zezpołów, ponad 15 tys uczestnikow", 1);
-
-        CustomEvent event2 = new CustomEvent(2, "Piknik WCY", "11/06/2019 15:00",
-                "Chlanie piwa, wódki itp itd", 2);
-
-        CustomEvent event3 = new CustomEvent(2, "Piknik WCY", "11/06/2019 15:00",
-                "Chlanie piwa, wódki itp itd", 2);
-
-        CustomEvent event4 = new CustomEvent(2, "Piknik WCY", "11/06/2019 15:00",
-                "Chlanie piwa, wódki itp itd", 2);
-
-        CustomEvent event5 = new CustomEvent(2, "Piknik WCY", "11/06/2019 15:00",
-                "Chlanie piwa, wódki itp itd", 2);
 
         listEvents = new ArrayList<>();
 
@@ -108,10 +92,10 @@ public class MyEventsFragment extends Fragment {
                         }
                     });
 
-                    Toast.makeText(getActivity(), "Pobrano wydarzenia", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Zaktualizowano wydarzenia", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getActivity(), "Wystąpił błąd! Nie udało się pobrać wydarzeń.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Wystąpił błąd! Nie udało się zaktualizować wydarzeń.", Toast.LENGTH_SHORT).show();
                 }
 
 

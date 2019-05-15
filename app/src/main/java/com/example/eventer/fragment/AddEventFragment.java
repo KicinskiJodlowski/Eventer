@@ -45,7 +45,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
 
 public class AddEventFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -60,17 +59,10 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
 
     Uri imageUri;
 
-    Retrofit.Builder builder = new Retrofit.Builder()
-            .baseUrl("https://neweventer.azurewebsites.net/")
-            .addConverterFactory(GsonConverterFactory.create());
-    Retrofit retrofit = builder.build();
-    UserAPIClient userAPIClient = retrofit.create(UserAPIClient.class);
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.add_event_fragment, container, false);
-        //Toast.makeText(this, "Add", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -187,7 +179,8 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
         jsonParams.put("dateOfEvent", date);
         jsonParams.put("description", desc);
 
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),
+                (new JSONObject(jsonParams)).toString());
 
         Call<ResponseBody> call = RetrofitClient.getInstance().getApi().addEvent(LoginFragment.userTOKEN,body);
 
@@ -197,15 +190,9 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
 
                 Log.d("RESPONSE CODE --> ", Integer.toString(response.code()));
 
-                String s = null;
-
                 if(response.code() == 201) {
-
-                    textEventTitle.setText("");
-                    textEventDesc.setText("");
-                    btnDatePick.setText("");
-                    btnTimePick.setText("");
                     Toast.makeText(getActivity(), "Dodano nowe wydarzenie", Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
                 }
                 else {
                     Toast.makeText(getActivity(), "Wystąpił błąd! Upewnij się, że wprowadzono nazwę oraz wybrano datę", Toast.LENGTH_SHORT).show();

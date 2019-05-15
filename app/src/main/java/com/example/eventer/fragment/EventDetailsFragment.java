@@ -40,7 +40,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
     EventModel eventD;
 
     EditText eventTitle, eventDesc;
-    Button btnDate, btnTime, btnEdit, btnSave;
+    Button btnDate, btnTime, btnEdit, btnSave, btnShow, btnHide;
     int day, month, year, hour, minute;
 
     @Nullable
@@ -61,10 +61,11 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         btnTime = getActivity().findViewById(R.id.eventStartTime);
         btnEdit = getActivity().findViewById(R.id.btnEdit);
         btnSave = getActivity().findViewById(R.id.btnSave);
+        btnShow = getActivity().findViewById(R.id.btnShowGuests);
+        btnHide = getActivity().findViewById(R.id.btnHideGuests);
 
         eventTitle.setText(eventD.getEventName());
         eventDesc.setText(eventD.getDescription());
-
         btnDate.setText(eventD.getDateOfEvent().substring(0, eventD.getDateOfEvent().indexOf('T')));
         btnTime.setText(eventD.getDateOfEvent().substring(eventD.getDateOfEvent().indexOf('T')+1));
 
@@ -72,6 +73,23 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         {
             btnEdit.setVisibility(View.VISIBLE);
         }
+
+        btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnShow.setVisibility(View.GONE);
+                btnHide.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnHide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnShow.setVisibility(View.VISIBLE);
+                btnHide.setVisibility(View.GONE);
+            }
+        });
+
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +100,8 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 btnDate.setEnabled(true);
                 btnTime.setEnabled(true);
 
+                btnHide.setVisibility(View.GONE);
+                btnShow.setVisibility(View.GONE);
                 btnEdit.setVisibility(View.GONE);
                 btnSave.setVisibility(View.VISIBLE);
 
@@ -98,6 +118,8 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 btnDate.setEnabled(false);
                 btnTime.setEnabled(false);
 
+                btnHide.setVisibility(View.GONE);
+                btnShow.setVisibility(View.VISIBLE);
                 btnEdit.setVisibility(View.VISIBLE);
                 btnSave.setVisibility(View.GONE);
 
@@ -167,9 +189,11 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         jsonParams.put("ownerID", ownerId);
         jsonParams.put("invitedGuests", guests);
 
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),
+                (new JSONObject(jsonParams)).toString());
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().updateEvent(eventD.getEventId(), LoginFragment.userTOKEN, body);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().updateEvent(eventD.getEventId(),
+                LoginFragment.userTOKEN, body);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -177,13 +201,13 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
                 Log.d("RESPONSE CODE --> ", Integer.toString(response.code()));
 
-                String s = null;
-
                 if(response.code() == 204) {
                     Toast.makeText(getActivity(),"Zmiany zostały zapisane",Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
                 }
                 else {
-                    Toast.makeText(getActivity(), "Wystąpił błąd! Upewnij się, że wprowadzono nazwę oraz wybrano datę", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Wystąpił błąd!",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
 

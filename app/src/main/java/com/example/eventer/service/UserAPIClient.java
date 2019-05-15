@@ -27,15 +27,8 @@ public interface UserAPIClient {
 
     String URL = "https://neweventer.azurewebsites.net/";
 
-
-
     @POST("/api/AppUser/login")
     Call<TokenJSONModel> login(@Body LoginJSONModel login);
-
-    @POST("/api/AppUser/Register")
-    Call<UserJSONModel> register(@Query("succeeded") boolean response, @Query ("errors") String errors);
-    //"succeeded": true,
-    //    "errors": []
 
     @GET("api/Event/userEvent")
     Call<ArrayList<EventModel>> getEvents(@Header("Authorization") String authKey);
@@ -55,11 +48,8 @@ public interface UserAPIClient {
             @Body RequestBody params
             );
 
-//    @POST("/api/Event")
-//    Call<EventJSONModel>  addEvent(@Body EventJSONModel event, @Header("Authorization") String authHeader);
-
-//    @GET("api/Event/GetProfile?id={id}")
-//    Call<UserProfile> getUser(@Path("id") String id, @Header("Authorization") String authHeader);
-
-
+    @POST("/api/AppUser/Register")
+    Call<UserJSONModel> register(@Query("succeeded") boolean response, @Query ("errors") String errors);
+    //"succeeded": true,
+    //    "errors": []
 }

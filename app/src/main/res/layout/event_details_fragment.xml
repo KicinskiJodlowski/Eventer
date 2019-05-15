@@ -96,18 +96,28 @@
                 android:inputType="textMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="3"
                 android:scrollbars="vertical"
                 android:enabled="false"
                 android:fadeScrollbars="true"/>
 
             <Button
                 android:id="@+id/btnShowGuests"
-                android:text="Pokaż uczestników"
+                android:text="Pokaż listę uczestników"
                 android:backgroundTint="@android:color/holo_orange_dark"
                 android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
+
+            <Button
+                android:id="@+id/btnHideGuests"
+                android:text="Ukryj listę uczestników"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:visibility="gone"/>
+
+
 
             <Button
                 android:id="@+id/btnEdit"
