@@ -19,6 +19,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/eventId"
+                android:hint=""
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:enabled="false"
+                android:textAlignment="center"
+                android:visibility="gone"/>
+
             <TextView
                 android:paddingTop="20dp"
                 android:layout_height="wrap_content"

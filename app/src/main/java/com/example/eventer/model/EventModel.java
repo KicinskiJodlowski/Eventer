@@ -3,7 +3,10 @@ package com.example.eventer.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class EventJSONModel {
+import java.io.Serializable;
+import java.util.List;
+
+public class EventModel implements Serializable {
 
     @SerializedName("eventId")
     @Expose
@@ -25,13 +28,51 @@ public class EventJSONModel {
     private String eventQRCode;
     @SerializedName("jobIDscheduler")
     @Expose
-    private Object jobIDscheduler;
+    private String jobIDscheduler;
     @SerializedName("ownerID")
     @Expose
-    private Object ownerID;
+    private String ownerID;
     @SerializedName("invitedGuests")
     @Expose
-    private Object invitedGuests;
+    private List<InvitedGuest> invitedGuests = null;
+
+    /**
+     * No args constructor for use in serialization
+     *
+     */
+    public EventModel() {
+    }
+
+    /**
+     *
+     * @param ownerID
+     * @param eventId
+     * @param invitedGuests
+     * @param description
+     * @param eventQRCode
+     * @param imgURL
+     * @param jobIDscheduler
+     * @param dateOfEvent
+     * @param eventName
+     */
+    public EventModel(Integer eventId, String eventName, String dateOfEvent, String description, Object imgURL, String eventQRCode, String jobIDscheduler, String ownerID, List<InvitedGuest> invitedGuests) {
+        super();
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.dateOfEvent = dateOfEvent;
+        this.description = description;
+        this.imgURL = imgURL;
+        this.eventQRCode = eventQRCode;
+        this.jobIDscheduler = jobIDscheduler;
+        this.ownerID = ownerID;
+        this.invitedGuests = invitedGuests;
+    }
+
+    public EventModel(String eventName, String dateOfEvent, String description) {
+        this.eventName = eventName;
+        this.dateOfEvent = dateOfEvent;
+        this.description = description;
+    }
 
     public Integer getEventId() {
         return eventId;
@@ -81,33 +122,28 @@ public class EventJSONModel {
         this.eventQRCode = eventQRCode;
     }
 
-    public Object getJobIDscheduler() {
+    public String getJobIDscheduler() {
         return jobIDscheduler;
     }
 
-    public void setJobIDscheduler(Object jobIDscheduler) {
+    public void setJobIDscheduler(String jobIDscheduler) {
         this.jobIDscheduler = jobIDscheduler;
     }
 
-    public Object getOwnerID() {
+    public String getOwnerID() {
         return ownerID;
     }
 
-    public void setOwnerID(Object ownerID) {
+    public void setOwnerID(String ownerID) {
         this.ownerID = ownerID;
     }
 
-    public Object getInvitedGuests() {
+    public List<InvitedGuest> getInvitedGuests() {
         return invitedGuests;
     }
 
-    public void setInvitedGuests(Object invitedGuests) {
+    public void setInvitedGuests(List<InvitedGuest> invitedGuests) {
         this.invitedGuests = invitedGuests;
     }
 
-    public EventJSONModel(String eventName, String dateOfEvent, String description) {
-        this.eventName = eventName;
-        this.dateOfEvent = dateOfEvent;
-        this.description = description;
-    }
 }

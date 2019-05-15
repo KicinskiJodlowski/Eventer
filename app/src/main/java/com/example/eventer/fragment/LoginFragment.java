@@ -42,6 +42,7 @@ public class LoginFragment extends Fragment {
     SharedPreferences.Editor editor;
     Intent activityIntent;
 
+    public static String userTOKEN;
 
     @Nullable
     @Override
@@ -81,6 +82,7 @@ public class LoginFragment extends Fragment {
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), response.body().getToken(), Toast.LENGTH_SHORT).show();
                     //tu zapisac token do SP i zakonczyc activity
+                        userTOKEN = "Bearer " + response.body().getToken();
                     token = getActivity().getSharedPreferences("token", Context.MODE_PRIVATE);
                     editor = token.edit();
                     editor.putString("token", response.body().getToken());
