@@ -2,6 +2,7 @@ package com.example.eventer.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -22,6 +24,8 @@ import com.example.eventer.R;
 import com.example.eventer.RetrofitClient;
 import com.example.eventer.model.EventModel;
 import com.example.eventer.model.InvitedGuest;
+import com.google.zxing.BarcodeFormat;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONObject;
 
@@ -40,7 +44,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
     EventModel eventD;
 
     EditText eventTitle, eventDesc;
-    Button btnDate, btnTime, btnEdit, btnSave;
+    Button btnDate, btnTime, btnEdit, btnSave, btnShare;
     int day, month, year, hour, minute;
 
     @Nullable
@@ -61,6 +65,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         btnTime = getActivity().findViewById(R.id.eventStartTime);
         btnEdit = getActivity().findViewById(R.id.btnEdit);
         btnSave = getActivity().findViewById(R.id.btnSave);
+        btnShare = getActivity().findViewById(R.id.btnShare);
 
         eventTitle.setText(eventD.getEventName());
         eventDesc.setText(eventD.getDescription());
@@ -137,6 +142,16 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 timePickerDialog.show();
             }
         });
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();
+                TextToQrCode(eventD.getEventQRCode());
+            }
+        });
+
+
     }
 
     private void updateEvent()
@@ -220,6 +235,14 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         String tmp = hourText + ":" + minuteText;
         btnTime.setText(tmp);
     }
-
+    private void TextToQrCode(String Value) {
+        try {
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.encodeBitmap("content", BarcodeFormat.QR_CODE, 400, 400);
+            ImageView imageViewQrCode = (ImageView) getActivity().findViewById(R.id.qrCode);
+            imageViewQrCode.setImageBitmap(bitmap);
+        } catch(Exception e) {
+        }
+    }
 
 }

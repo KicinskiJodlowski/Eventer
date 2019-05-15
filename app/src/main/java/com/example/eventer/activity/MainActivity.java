@@ -98,10 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                integrator.setBarcodeImageEnabled(true);
 //                integrator.initiateScan();
                 break;
-            case R.id.share_event:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShareFragment()).commit();
-                TextToQrCode("Tajny tekst testowy");
-                break;
+
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                 break;

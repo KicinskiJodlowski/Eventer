@@ -12,7 +12,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="665dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,108 +21,117 @@
 
             <EditText
                 android:id="@+id/eventId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint=""
                 android:inputType="textPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:enabled="false"
                 android:textAlignment="center"
-                android:visibility="gone"/>
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
-                android:paddingTop="20dp"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
                 android:text="Nazwa wydarzenia:"
+                android:textAlignment="center"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                android:textAlignment="center"/>
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/eventTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
                 android:hint=""
                 android:inputType="textPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:enabled="false"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textStyle="bold" />
 
             <TextView
-                android:paddingTop="10dp"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:text="Data rozpoczęcia wydarzenia:"
-                android:textSize="16dp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/eventStartDate"
-                android:hint=""
-                android:inputType="date"
-                android:enabled="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint=""
+                android:inputType="date" />
 
             <TextView
-                android:paddingTop="10dp"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:text="Godzina rozpoczęcia wydarzenia:"
-                android:textSize="16dp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/eventStartTime"
-                android:hint=""
-                android:inputType="time"
-                android:enabled="false"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint=""
+                android:inputType="time" />
 
             <TextView
-                android:paddingTop="10dp"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:text="Opis wydarzenia:"
-                android:textSize="16dp"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="16dp" />
 
             <EditText
                 android:id="@+id/eventDesc"
-                android:hint=""
-                android:gravity="center_horizontal"
-                android:inputType="textMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="3"
-                android:scrollbars="vertical"
                 android:enabled="false"
-                android:fadeScrollbars="true"/>
+                android:fadeScrollbars="true"
+                android:gravity="center_horizontal"
+                android:hint=""
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:scrollbars="vertical" />
 
             <Button
                 android:id="@+id/btnEdit"
-                android:text="Edytuj"
-                android:backgroundTint="@android:color/holo_green_dark"
-                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:text="Edytuj"
+                android:textColor="@android:color/white" />
 
             <ImageView
                 android:id="@+id/imageEvent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/btnSave"
-                android:text="Zapisz zmiany"
-                android:backgroundTint="@android:color/holo_blue_dark"
-                android:textColor="@android:color/white"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:visibility="gone"/>
+                android:backgroundTint="@android:color/holo_blue_dark"
+                android:text="Zapisz zmiany"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+            <Button
+                android:id="@+id/btnShare"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_blue_dark"
+                android:text="Udostępnij wydarzenie"
+                android:textColor="@android:color/white"
+                />
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
