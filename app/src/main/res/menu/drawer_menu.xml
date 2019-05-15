@@ -30,4 +30,8 @@
                 android:title="Dołącz do wydarzenia" />
         </menu>
     </item>
+    <item
+        android:id="@+id/logOut_event"
+        android:icon="@drawable/ic_logout"
+        android:title="Wyloguj" />
 </menu>

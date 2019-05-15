@@ -1,11 +1,16 @@
 package com.example.eventer.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.eventer.fragment.LoginFragment;
+
 public class InitialActivity extends AppCompatActivity {
+
 
     @Override
 
@@ -34,7 +39,18 @@ public class InitialActivity extends AppCompatActivity {
     }
 
     private boolean checkTokenIsValid() {
-        return false;
+        SharedPreferences sharedPreferences = this.getSharedPreferences("token", Context.MODE_PRIVATE);
+        String session = sharedPreferences.getString("token", null);
+        if (session == null) {
+            return false;
+        } else {
+            //tu spr czy rzuca unauthorized dla tego tokena
+            if (true) {
+                LoginFragment.userTOKEN = "Bearer " + session; return true;
+            } else {
+                LoginFragment.userTOKEN = "Bearer " + session; return true;}
+        }
+//        return false;
     }
 
 

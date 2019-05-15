@@ -1,6 +1,8 @@
 package com.example.eventer.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -102,6 +104,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+                break;
+            case R.id.logOut_event:
+                SharedPreferences sharedPreferences = this.getSharedPreferences("token", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("token", null).apply();
+                Intent activityIntent;
+                activityIntent = new Intent(this, LoginActivity.class);
+                startActivity(activityIntent);
+                finish();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
