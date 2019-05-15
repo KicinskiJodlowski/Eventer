@@ -168,9 +168,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, notificationMessage, Toast.LENGTH_LONG).show();
-                TextView helloText = (TextView) findViewById(R.id.text_hello);
-                helloText.setText(notificationMessage);
+//                Toast.makeText(MainActivity.this, notificationMessage, Toast.LENGTH_LONG).show();
+//                TextView helloText = (TextView) findViewById(R.id.text_hello);
+//                helloText.setText(notificationMessage);
             }
         });
     }
