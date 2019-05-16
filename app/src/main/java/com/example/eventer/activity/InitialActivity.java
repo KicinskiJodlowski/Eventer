@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.eventer.SharedPreferenceManager;
 import com.example.eventer.fragment.LoginFragment;
 
 public class InitialActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class InitialActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        SharedPreferenceManager.init(getApplicationContext());
         Intent activityIntent;
 
         // go straight to main if a token is stored

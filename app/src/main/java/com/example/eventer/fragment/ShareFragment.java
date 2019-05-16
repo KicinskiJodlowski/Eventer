@@ -35,7 +35,7 @@ public class ShareFragment extends Fragment {
         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
         Bitmap bitmap = null;
         try {
-            bitmap = barcodeEncoder.encodeBitmap("Halo, halo! Co to za kod QR?", BarcodeFormat.QR_CODE, 600, 600);
+            bitmap = barcodeEncoder.encodeBitmap("Bla bla", BarcodeFormat.QR_CODE, 600, 600);
         } catch (WriterException e) {
             e.printStackTrace();
         }
