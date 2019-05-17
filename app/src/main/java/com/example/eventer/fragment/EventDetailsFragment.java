@@ -74,6 +74,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         btnShare = getActivity().findViewById(R.id.btnShare);
         btnShow = getActivity().findViewById(R.id.btnShowGuests);
         btnHide = getActivity().findViewById(R.id.btnHideGuests);
+        listViewGuests = getActivity().findViewById(R.id.listGuests);
 
         eventTitle.setText(eventD.getEventName());
         eventDesc.setText(eventD.getDescription());
@@ -90,8 +91,6 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
             public void onClick(View v) {
                 btnShow.setVisibility(View.GONE);
                 btnHide.setVisibility(View.VISIBLE);
-
-                listViewGuests = getActivity().findViewById(R.id.listGuests);
                 listViewGuests.setVisibility(View.VISIBLE);
 
                 listGuests = new ArrayList<>();
@@ -271,6 +270,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
                 if(response.code() == 204) {
                     Toast.makeText(getActivity(),"Zmiany zostały zapisane",Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
                 }
                 else {
                     Toast.makeText(getActivity(), "Wystąpił błąd! Upewnij się, że wprowadzono nazwę oraz wybrano datę", Toast.LENGTH_SHORT).show();
