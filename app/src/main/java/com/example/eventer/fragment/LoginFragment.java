@@ -44,6 +44,8 @@ public class LoginFragment extends Fragment {
     Intent activityIntent;
 
     public static String userTOKEN;
+    public static String userID;
+
 
     @Nullable
     @Override
@@ -81,11 +83,12 @@ public class LoginFragment extends Fragment {
             @Override
             public void onResponse(Call<TokenJSONModel> call, Response<TokenJSONModel> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), response.body().getToken(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), response.body().getId(), Toast.LENGTH_SHORT).show();
                     //tu zapisac token do SP i zakonczyc activity
+                    userID = response.body().getId();
+                    SharedPreferenceManager.write(SharedPreferenceManager.ID, userID);
                     userTOKEN = "Bearer " + response.body().getToken();
                     SharedPreferenceManager.write(SharedPreferenceManager.TOKEN, userTOKEN);
-                    //SharedPreferenceManager.write(SharedPreferenceManager.ID, response.body().getId());
                     activityIntent = new Intent(getActivity(), MainActivity.class);
                     startActivity(activityIntent);
                     getActivity().finish();

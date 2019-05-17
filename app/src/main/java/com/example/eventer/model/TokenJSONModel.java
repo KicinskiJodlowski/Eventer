@@ -6,9 +6,12 @@ public class TokenJSONModel {
 
     @SerializedName("token")
     private String token;
+    @SerializedName("id")
+    private String id;
 
-    public TokenJSONModel(String token) {
+    public TokenJSONModel(String token, String id) {
         this.token = token;
+        this.id = id;
     }
     public String getToken() {
         return token;
@@ -17,4 +20,11 @@ public class TokenJSONModel {
         this.token = token;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

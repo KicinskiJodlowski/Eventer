@@ -81,7 +81,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         btnDate.setText(eventD.getDateOfEvent().substring(0, eventD.getDateOfEvent().indexOf('T')));
         btnTime.setText(eventD.getDateOfEvent().substring(eventD.getDateOfEvent().indexOf('T')+1));
 
-        if(eventD.getOwnerID() != null)
+        if(eventD.getOwnerID().contentEquals(SharedPreferenceManager.read(SharedPreferenceManager.ID,"")))
         {
             btnEdit.setVisibility(View.VISIBLE);
         }

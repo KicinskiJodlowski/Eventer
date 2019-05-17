@@ -129,7 +129,8 @@
                 android:layout_height="50dp"
                 android:backgroundTint="@android:color/holo_green_dark"
                 android:text="Edytuj"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/imageEvent"
