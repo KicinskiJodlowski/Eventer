@@ -2,6 +2,7 @@ package com.example.eventer.service;
 
 import com.example.eventer.model.EventJSONModel;
 import com.example.eventer.model.EventModel;
+import com.example.eventer.model.GuestModel;
 import com.example.eventer.model.LoginJSONModel;
 import com.example.eventer.model.TokenJSONModel;
 import com.example.eventer.model.UserJSONModel;
@@ -40,6 +41,12 @@ public interface UserAPIClient {
     @GET("api/Event/userEvent")
     Call<ArrayList<EventModel>> getEvents(@Header("Authorization") String authKey);
 
+    @GET("api/InvitedGuest/eventGuest/{id}")
+    Call<ArrayList<GuestModel>> getGuests(
+            @Path("id") int id,
+            @Header("Authorization") String authKey
+    );
+
     @Headers( { "Content-Type: application/json" } )
     @PUT("api/Event/{id}")
     Call<ResponseBody> updateEvent(
@@ -53,7 +60,7 @@ public interface UserAPIClient {
     Call<ResponseBody> addEvent(
             @Header("Authorization") String authKey,
             @Body RequestBody params
-            );
+    );
 
 //    @POST("/api/Event")
 //    Call<EventJSONModel>  addEvent(@Body EventJSONModel event, @Header("Authorization") String authHeader);

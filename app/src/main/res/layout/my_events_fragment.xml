@@ -9,8 +9,6 @@
         android:id="@+id/listViewEvents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:focusable="true"
         android:clickable="true"/>
 

@@ -102,6 +102,28 @@
                 android:scrollbars="vertical" />
 
             <Button
+                android:id="@+id/btnShowGuests"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:text="Pokaż listę uczestników"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btnHideGuests"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:text="Ukryj listę uczestników"
+                android:textColor="@android:color/white"
+                android:visibility="gone"/>
+
+            <ListView
+                android:id="@+id/listGuests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
+
+            <Button
                 android:id="@+id/btnEdit"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

@@ -23,15 +23,17 @@ public class InitialActivity extends AppCompatActivity {
 
         // go straight to main if a token is stored
 
-        if (checkTokenIsValid() == true) {
+//        if (checkTokenIsValid() == true) {
+//
+//            activityIntent = new Intent(this, MainActivity.class);
+//
+//        } else {
+//
+//            activityIntent = new Intent(this, LoginActivity.class);
+//
+//        }
 
-            activityIntent = new Intent(this, MainActivity.class);
-
-        } else {
-
-            activityIntent = new Intent(this, LoginActivity.class);
-
-        }
+        activityIntent = new Intent(this, LoginActivity.class);
 
         startActivity(activityIntent);
 
@@ -49,7 +51,8 @@ public class InitialActivity extends AppCompatActivity {
             if (true) {
                 LoginFragment.userTOKEN = "Bearer " + session; return true;
             } else {
-                LoginFragment.userTOKEN = "Bearer " + session; return true;}
+                LoginFragment.userTOKEN = "Bearer " + session; return true;
+            }
         }
 //        return false;
     }

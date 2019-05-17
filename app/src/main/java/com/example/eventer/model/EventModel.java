@@ -22,7 +22,7 @@ public class EventModel implements Serializable {
     private String description;
     @SerializedName("imgURL")
     @Expose
-    private Object imgURL;
+    private String imgURL;
     @SerializedName("eventQRCode")
     @Expose
     private String eventQRCode;
@@ -55,7 +55,7 @@ public class EventModel implements Serializable {
      * @param dateOfEvent
      * @param eventName
      */
-    public EventModel(Integer eventId, String eventName, String dateOfEvent, String description, Object imgURL, String eventQRCode, String jobIDscheduler, String ownerID, List<InvitedGuest> invitedGuests) {
+    public EventModel(Integer eventId, String eventName, String dateOfEvent, String description, String imgURL, String eventQRCode, String jobIDscheduler, String ownerID, List<InvitedGuest> invitedGuests) {
         super();
         this.eventId = eventId;
         this.eventName = eventName;
@@ -69,6 +69,7 @@ public class EventModel implements Serializable {
     }
 
     public EventModel(String eventName, String dateOfEvent, String description) {
+        super();
         this.eventName = eventName;
         this.dateOfEvent = dateOfEvent;
         this.description = description;
@@ -106,11 +107,11 @@ public class EventModel implements Serializable {
         this.description = description;
     }
 
-    public Object getImgURL() {
+    public String getImgURL() {
         return imgURL;
     }
 
-    public void setImgURL(Object imgURL) {
+    public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
     }
 

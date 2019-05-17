@@ -54,7 +54,7 @@ tools:context=".fragment.LoginFragment">
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:text="Rafal" />
+            android:text="Michal" />
 
         <EditText
             android:id="@+id/passwordText"
@@ -65,7 +65,7 @@ tools:context=".fragment.LoginFragment">
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
-            android:text="Rafal12345@"
+            android:text="Michal12345@"
             tools:layout_conversion_wrapHeight="118"
             tools:layout_conversion_wrapWidth="560" />
 

@@ -16,19 +16,24 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.eventer.R;
 import com.example.eventer.RetrofitClient;
+import com.example.eventer.SharedPreferenceManager;
+import com.example.eventer.adapter.EventRecordAdapter;
+import com.example.eventer.adapter.GuestRecordAdapter;
 import com.example.eventer.model.EventModel;
+import com.example.eventer.model.GuestModel;
 import com.example.eventer.model.InvitedGuest;
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +47,10 @@ import retrofit2.Response;
 public class EventDetailsFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     EventModel eventD;
-
+    ListView listViewGuests;
+    public static ArrayList<GuestModel> listGuests;
     EditText eventTitle, eventDesc;
-    Button btnDate, btnTime, btnEdit, btnSave, btnShare;
+    Button btnDate, btnTime, btnEdit, btnSave, btnShare, btnShow, btnHide;
     int day, month, year, hour, minute;
 
     @Nullable
@@ -66,10 +72,11 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         btnEdit = getActivity().findViewById(R.id.btnEdit);
         btnSave = getActivity().findViewById(R.id.btnSave);
         btnShare = getActivity().findViewById(R.id.btnShare);
+        btnShow = getActivity().findViewById(R.id.btnShowGuests);
+        btnHide = getActivity().findViewById(R.id.btnHideGuests);
 
         eventTitle.setText(eventD.getEventName());
         eventDesc.setText(eventD.getDescription());
-
         btnDate.setText(eventD.getDateOfEvent().substring(0, eventD.getDateOfEvent().indexOf('T')));
         btnTime.setText(eventD.getDateOfEvent().substring(eventD.getDateOfEvent().indexOf('T')+1));
 
@@ -77,6 +84,30 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         {
             btnEdit.setVisibility(View.VISIBLE);
         }
+
+        btnShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnShow.setVisibility(View.GONE);
+                btnHide.setVisibility(View.VISIBLE);
+
+                listViewGuests = getActivity().findViewById(R.id.listGuests);
+                listViewGuests.setVisibility(View.VISIBLE);
+
+                listGuests = new ArrayList<>();
+                getGuests();
+            }
+        });
+
+        btnHide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listViewGuests.setVisibility(View.GONE);
+                btnHide.setVisibility(View.GONE);
+                btnShow.setVisibility(View.VISIBLE);
+
+            }
+        });
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,9 +118,12 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 btnDate.setEnabled(true);
                 btnTime.setEnabled(true);
 
+                listViewGuests.setVisibility(View.GONE);
+                btnShare.setVisibility(View.GONE);
+                btnShow.setVisibility(View.GONE);
+                btnHide.setVisibility(View.GONE);
                 btnEdit.setVisibility(View.GONE);
                 btnSave.setVisibility(View.VISIBLE);
-
             }
         });
 
@@ -103,6 +137,8 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 btnDate.setEnabled(false);
                 btnTime.setEnabled(false);
 
+                btnShare.setVisibility(View.VISIBLE);
+                btnShow.setVisibility(View.VISIBLE);
                 btnEdit.setVisibility(View.VISIBLE);
                 btnSave.setVisibility(View.GONE);
 
@@ -154,11 +190,52 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
     }
 
+    private void getGuests() {
+
+        Call<ArrayList<GuestModel>> call = RetrofitClient.getInstance().getApi().getGuests(eventD.getEventId(),SharedPreferenceManager.read(SharedPreferenceManager.TOKEN,""));
+
+        call.enqueue(new Callback<ArrayList<GuestModel>>() {
+            @Override
+            public void onResponse(Call<ArrayList<GuestModel>> call, Response<ArrayList<GuestModel>> response) {
+
+                Log.d("Response Code: ", Integer.toString(response.code()));
+
+                Toast.makeText(getActivity(), response.body().toString(), Toast.LENGTH_SHORT).show();
+
+                if(response.code() == 200) {
+
+                    Toast.makeText(getActivity(), "Pobrano uczestników", Toast.LENGTH_SHORT).show();
+
+                    GuestRecordAdapter adapter = new GuestRecordAdapter(getActivity(), R.layout.guest_record, listGuests);
+                    listViewGuests.setAdapter(adapter);
+                }
+
+                else {
+                    Toast.makeText(getActivity(), "Wystąpił błąd! Nie udało się pobrać uczestników.", Toast.LENGTH_SHORT).show();
+                }
+
+
+                ArrayList<GuestModel> guests = response.body();
+
+                for(GuestModel guest : guests)
+                {
+                    //if(event.getEventName() == null) event.setEventName("BRAK NAZWY"); // to prevent error with events with no title
+                    listGuests.add(guest); //tested - OK
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<GuestModel>> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
     private void updateEvent()
     {
         Integer eventId;
-        String title, date, desc, ownerId, qrCode, jobIdScheduler;
-        Object imgURL;
+        String title, date, desc, imgURL, ownerId, qrCode, jobIdScheduler;
         List<InvitedGuest> guests;
 
         eventId = eventD.getEventId();
@@ -178,7 +255,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         jsonParams.put("description", desc);
         jsonParams.put("imgURL", imgURL);
         jsonParams.put("eventQRCode", qrCode);
-        jsonParams.put("jobIDscheduler", jobIdScheduler);
+        jsonParams.put("jobIDScheduler", jobIdScheduler);
         jsonParams.put("ownerID", ownerId);
         jsonParams.put("invitedGuests", guests);
 
@@ -190,9 +267,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                Log.d("RESPONSE CODE --> ", Integer.toString(response.code()));
-
-                String s = null;
+                Log.d("Response code: ", Integer.toString(response.code()));
 
                 if(response.code() == 204) {
                     Toast.makeText(getActivity(),"Zmiany zostały zapisane",Toast.LENGTH_SHORT).show();
@@ -235,6 +310,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         String tmp = hourText + ":" + minuteText;
         btnTime.setText(tmp);
     }
+
     private void TextToQrCode(String Value) {
         try {
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();

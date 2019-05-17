@@ -85,6 +85,7 @@ public class LoginFragment extends Fragment {
                     //tu zapisac token do SP i zakonczyc activity
                     userTOKEN = "Bearer " + response.body().getToken();
                     SharedPreferenceManager.write(SharedPreferenceManager.TOKEN, userTOKEN);
+                    //SharedPreferenceManager.write(SharedPreferenceManager.ID, response.body().getId());
                     activityIntent = new Intent(getActivity(), MainActivity.class);
                     startActivity(activityIntent);
                     getActivity().finish();
