@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventer.R;
+import com.example.eventer.RetrofitClient;
 import com.example.eventer.SharedPreferenceManager;
 import com.example.eventer.activity.LoginActivity;
 import com.example.eventer.activity.MainActivity;
@@ -79,7 +80,7 @@ public class LoginFragment extends Fragment {
 
     private void loginOnClick() {
         LoginJSONModel login = new LoginJSONModel(((EditText) Objects.requireNonNull(getActivity()).findViewById(R.id.userNameText)).getText().toString(), ((EditText) getActivity().findViewById(R.id.passwordText)).getText().toString());
-        Call<TokenJSONModel> call = userAPIClient.login(login);
+        Call<TokenJSONModel> call = RetrofitClient.getInstance().getApi().login(login);
         call.enqueue(new Callback<TokenJSONModel>() {
             @Override
             public void onResponse(Call<TokenJSONModel> call, Response<TokenJSONModel> response) {
@@ -101,7 +102,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onFailure(Call<TokenJSONModel> call, Throwable t) {
-                Toast.makeText(getActivity(), "failure", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Login failure", Toast.LENGTH_SHORT).show();
             }
         });
     }

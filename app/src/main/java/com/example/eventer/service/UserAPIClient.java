@@ -4,6 +4,7 @@ import com.example.eventer.model.EventJSONModel;
 import com.example.eventer.model.EventModel;
 import com.example.eventer.model.GuestModel;
 import com.example.eventer.model.LoginJSONModel;
+import com.example.eventer.model.RegisterResponseModel;
 import com.example.eventer.model.TokenJSONModel;
 import com.example.eventer.model.UserJSONModel;
 
@@ -34,7 +35,7 @@ public interface UserAPIClient {
     Call<TokenJSONModel> login(@Body LoginJSONModel login);
 
     @POST("/api/AppUser/Register")
-    Call<UserJSONModel> register(@Query("succeeded") boolean response, @Query ("errors") String errors);
+    Call<RegisterResponseModel> register(@Body UserJSONModel user);
     //"succeeded": true,
     //    "errors": []
 

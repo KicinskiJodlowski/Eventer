@@ -11,11 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.eventer.R;
+import com.example.eventer.RetrofitClient;
+import com.example.eventer.model.RegisterResponseModel;
 import com.example.eventer.model.UserJSONModel;
+import com.example.eventer.service.UserAPIClient;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterFragment extends Fragment {
 
@@ -49,6 +55,18 @@ public class RegisterFragment extends Fragment {
                 ((EditText) getActivity().findViewById(R.id.mailText)).getText().toString(),
                 ((EditText) getActivity().findViewById(R.id.passwordText)).getText().toString(),
                 ((EditText) getActivity().findViewById(R.id.fullNameText)).getText().toString());
+        Call<RegisterResponseModel> call = RetrofitClient.getInstance().getApi().register(user);
+        call.enqueue(new Callback<RegisterResponseModel>() {
+            @Override
+            public void onResponse(Call<RegisterResponseModel> call, Response<RegisterResponseModel> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<RegisterResponseModel> call, Throwable t) {
+                Toast.makeText(getActivity(), "Register failure", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }
