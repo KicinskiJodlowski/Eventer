@@ -57,15 +57,15 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button registerButton = view.findViewById(R.id.RegisterButton);
-        Button loginButton = view.findViewById(R.id.loginButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        Button registerViewButton = view.findViewById(R.id.RegisterButton);
+        Button loginUserButton = view.findViewById(R.id.loginButton);
+        registerViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerLogin, new RegisterFragment()).commit();
             }
         });
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        loginUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loginOnClick();

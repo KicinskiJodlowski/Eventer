@@ -31,6 +31,12 @@ public class SharedPreferenceManager {
         prefsEditor.apply();
     }
 
+    public static void remove(String key){
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove(key);
+        prefsEditor.apply();
+    }
+
     public static boolean read(String key, boolean defValue) {
         return mSharedPref.getBoolean(key, defValue);
     }

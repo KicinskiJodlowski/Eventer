@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.eventer.SharedPreferenceManager;
 import com.example.eventer.fragment.AddEventFragment;
 import com.example.eventer.fragment.JoinFragment;
 import com.example.eventer.fragment.MyEventsFragment;
@@ -103,8 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                 break;
             case R.id.logOut_event:
-                SharedPreferences sharedPreferences = this.getSharedPreferences("token", Context.MODE_PRIVATE);
-                sharedPreferences.edit().putString("token", null).apply();
+                SharedPreferenceManager.remove(SharedPreferenceManager.TOKEN);
                 Intent activityIntent;
                 activityIntent = new Intent(this, LoginActivity.class);
                 startActivity(activityIntent);
