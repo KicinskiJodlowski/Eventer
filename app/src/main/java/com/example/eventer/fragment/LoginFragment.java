@@ -39,8 +39,6 @@ public class LoginFragment extends Fragment {
             .addConverterFactory(GsonConverterFactory.create());
     Retrofit retrofit = builder.build();
     UserAPIClient userAPIClient = retrofit.create(UserAPIClient.class);
-    SharedPreferences token;
-    SharedPreferences.Editor editor;
     Intent activityIntent;
 
     public static String userTOKEN;
@@ -59,8 +57,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button registerButton = (Button) view.findViewById(R.id.RegisterButton);
-        Button loginButton = (Button) view.findViewById(R.id.loginButton);
+        Button registerButton = view.findViewById(R.id.RegisterButton);
+        Button loginButton = view.findViewById(R.id.loginButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,8 +81,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onResponse(Call<TokenJSONModel> call, Response<TokenJSONModel> response) {
                 if (response.isSuccessful()) {
-                    //Toast.makeText(getActivity(), response.body().getId(), Toast.LENGTH_SHORT).show();
-                    //tu zapisac token do SP i zakonczyc activity
+
                     userID = response.body().getId();
                     SharedPreferenceManager.write(SharedPreferenceManager.ID, userID);
                     userTOKEN = "Bearer " + response.body().getToken();

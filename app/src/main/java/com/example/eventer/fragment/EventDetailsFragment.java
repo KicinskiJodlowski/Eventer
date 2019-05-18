@@ -3,11 +3,14 @@ package com.example.eventer.fragment;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.ArrayMap;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +36,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -52,6 +56,9 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
     EditText eventTitle, eventDesc;
     Button btnDate, btnTime, btnEdit, btnSave, btnShare, btnShow, btnHide;
     int day, month, year, hour, minute;
+    ImageView imageEvent;
+    String imageBase64;
+    Bitmap bitmap;
 
     @Nullable
     @Override
@@ -65,6 +72,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
         eventD = (EventModel) getArguments().getSerializable("event");
 
+        imageEvent = getActivity().findViewById(R.id.imageEvent);
         eventTitle = getActivity().findViewById(R.id.eventTitle);
         eventDesc = getActivity().findViewById(R.id.eventDesc);
         btnDate = getActivity().findViewById(R.id.eventStartDate);
@@ -80,6 +88,13 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         eventDesc.setText(eventD.getDescription());
         btnDate.setText(eventD.getDateOfEvent().substring(0, eventD.getDateOfEvent().indexOf('T')));
         btnTime.setText(eventD.getDateOfEvent().substring(eventD.getDateOfEvent().indexOf('T')+1));
+
+        if(eventD.getImgURL() != null)
+        {
+            imageBase64 = eventD.getImgURL();
+            bitmap = convertToImage();
+            imageEvent.setImageBitmap(bitmap);
+        }
 
         if(eventD.getOwnerID().contentEquals(SharedPreferenceManager.read(SharedPreferenceManager.ID,"")))
         {
@@ -185,8 +200,6 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 TextToQrCode(eventD.getEventQRCode());
             }
         });
-
-
     }
 
     private void getGuests() {
@@ -229,6 +242,13 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
             }
         });
 
+    }
+
+    private Bitmap convertToImage() {
+
+        byte[] imageBytes = Base64.decode(imageBase64, Base64.DEFAULT);
+        Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+        return  decodedImage;
     }
 
     private void updateEvent()
@@ -283,6 +303,8 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
             }
         });
     }
+
+
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

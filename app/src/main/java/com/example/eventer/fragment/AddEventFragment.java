@@ -5,6 +5,8 @@ import android.app.TimePickerDialog;
 
 import android.content.Intent;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.ArrayMap;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +34,7 @@ import com.example.eventer.service.UserAPIClient;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Map;
@@ -59,6 +63,9 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
     private static final int PICK_IMAGE = 100;
 
     Uri imageUri;
+
+    String imageBase64;
+    Bitmap bitmap;
 
     @Nullable
     @Override
@@ -157,40 +164,57 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE)
         {
             imageUri = data.getData();
-            imageEvent.setImageURI(imageUri);
+
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageUri);
+                imageEvent.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+    private String convertToBase64() {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+        byte[] imageBytes = baos.toByteArray();
+
+        String base64 = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+
+        return base64;
+    }
+
 
     private void openGallery()
     {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
-
     }
 
     private void addEvent()
     {
-        String title, date, desc;
+        String title, date, desc, imgURL;
         title = textEventTitle.getText().toString().trim();
         date = btnDatePick.getText().toString().trim() + " " + btnTimePick.getText().toString().trim();
         desc = textEventDesc.getText().toString().trim();
+        imgURL = convertToBase64();
 
         Map<String, Object> jsonParams = new ArrayMap<>();
         jsonParams.put("eventName", title);
         jsonParams.put("dateOfEvent", date);
         jsonParams.put("description", desc);
+        jsonParams.put("imgURL", imgURL);
 
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().addEvent(LoginFragment.userTOKEN,body);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().addEvent(LoginFragment.userTOKEN, body);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 Log.d("RESPONSE CODE --> ", Integer.toString(response.code()));
-
-                String s = null;
 
                 if(response.code() == 201) {
                     Toast.makeText(getActivity(), "Dodano nowe wydarzenie", Toast.LENGTH_SHORT).show();

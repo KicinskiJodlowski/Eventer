@@ -68,11 +68,12 @@ public class EventModel implements Serializable {
         this.invitedGuests = invitedGuests;
     }
 
-    public EventModel(String eventName, String dateOfEvent, String description) {
+    public EventModel(String eventName, String dateOfEvent, String description, String imgURL) {
         super();
         this.eventName = eventName;
         this.dateOfEvent = dateOfEvent;
         this.description = description;
+        this.imgURL = imgURL;
     }
 
     public Integer getEventId() {
