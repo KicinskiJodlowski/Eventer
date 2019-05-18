@@ -10,8 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.eventer.R;
+import com.example.eventer.model.UserJSONModel;
+
+import retrofit2.Call;
 
 public class RegisterFragment extends Fragment {
 
@@ -20,6 +24,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.register_fragment, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -40,6 +45,10 @@ public class RegisterFragment extends Fragment {
     }
 
     private void registerOnClick() {
+        UserJSONModel user = new UserJSONModel(((EditText) getActivity().findViewById(R.id.userNameText)).getText().toString(),
+                ((EditText) getActivity().findViewById(R.id.mailText)).getText().toString(),
+                ((EditText) getActivity().findViewById(R.id.passwordText)).getText().toString(),
+                ((EditText) getActivity().findViewById(R.id.fullNameText)).getText().toString());
 
     }
 }

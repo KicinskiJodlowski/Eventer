@@ -1,12 +1,9 @@
 package com.example.eventer.model;
 
-import com.google.gson.annotations.SerializedName;
 
 public class TokenJSONModel {
 
-    @SerializedName("token")
     private String token;
-    @SerializedName("id")
     private String id;
 
     public TokenJSONModel(String token, String id) {
