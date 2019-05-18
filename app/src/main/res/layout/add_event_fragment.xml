@@ -81,7 +81,6 @@
                 android:inputType="textMultiLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="3"
                 android:scrollbars="vertical"
                 android:fadeScrollbars="true"/>
 
@@ -96,7 +95,9 @@
             <ImageView
                 android:id="@+id/imageEvent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                />
 
             <Button
                 android:id="@+id/btnAddEvent"
