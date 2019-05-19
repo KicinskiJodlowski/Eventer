@@ -1,23 +1,25 @@
 package com.example.eventer.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventer.R;
 import com.example.eventer.RetrofitClient;
+import com.example.eventer.model.Error;
 import com.example.eventer.model.RegisterResponseModel;
 import com.example.eventer.model.UserJSONModel;
-import com.example.eventer.service.UserAPIClient;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +30,8 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
         return inflater.inflate(R.layout.register_fragment, container, false);
     }
 
@@ -36,6 +40,12 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button loginViewButton = view.findViewById(R.id.signInButton);
         Button registerUserButton = view.findViewById(R.id.loginButton);
+        final EditText password = view.findViewById(R.id.passwordText);
+        EditText passwordRepeat = view.findViewById(R.id.passwordRepeatText);
+        final Editable passwordText = password.getText();
+        final Editable passwordRepeatText = passwordRepeat.getText();
+        final TextView errorText = getActivity().findViewById(R.id.errorText);
+
         loginViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +55,10 @@ public class RegisterFragment extends Fragment {
         registerUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerOnClick();
+
+                if (passwordRepeatText.toString().equals(passwordText.toString())) {
+                    registerOnClick();
+                } else errorText.setText("Podane hasła nie są tożsame.");
             }
         });
     }
@@ -55,11 +68,20 @@ public class RegisterFragment extends Fragment {
                 ((EditText) getActivity().findViewById(R.id.mailText)).getText().toString(),
                 ((EditText) getActivity().findViewById(R.id.passwordText)).getText().toString(),
                 ((EditText) getActivity().findViewById(R.id.fullNameText)).getText().toString());
+        final TextView errorText = getActivity().findViewById(R.id.errorText);
         Call<RegisterResponseModel> call = RetrofitClient.getInstance().getApi().register(user);
         call.enqueue(new Callback<RegisterResponseModel>() {
             @Override
             public void onResponse(Call<RegisterResponseModel> call, Response<RegisterResponseModel> response) {
-
+                //Toast.makeText(getActivity(), response.body().getErrors().toString(), Toast.LENGTH_SHORT).show();
+                List<Error> errors = response.body().getErrors();
+                errorText.setText("");
+                String errorTmp = "";
+                for (Error e : errors) {
+                    //errorTmp+= (e.getDescription() + "\n");
+                    errorText.append(e.getDescription()+ "\n");
+                }
+                //errorText.setText(errorTmp);
             }
 
             @Override

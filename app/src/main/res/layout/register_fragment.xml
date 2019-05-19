@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="366dp"
-        android:layout_height="420dp"
+        android:layout_height="660dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
@@ -29,10 +29,10 @@
 
             <Button
                 android:id="@+id/signInButton"
-                android:backgroundTint="@android:color/holo_blue_dark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:backgroundTint="@android:color/holo_blue_dark"
                 android:text="Logowanie" />
 
             <Button
@@ -51,7 +51,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Login"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="Rafal" />
 
         <EditText
             android:id="@+id/fullNameText"
@@ -59,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Full Name"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:text="Rafał Budny" />
 
         <EditText
             android:id="@+id/mailText"
@@ -67,7 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="e-mail"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:text="rafal@budny.pl" />
 
         <EditText
             android:id="@+id/passwordText"
@@ -75,7 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="Rafal12345@" />
 
         <EditText
             android:id="@+id/passwordRepeatText"
@@ -83,18 +87,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Repeat Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:text="Rafal12345@" />
 
         <Button
             android:id="@+id/loginButton"
-            android:backgroundTint="@android:color/holo_green_dark"
             android:layout_width="match_parent"
             android:layout_height="53dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:backgroundTint="@android:color/holo_green_dark"
             android:text="Zarejestruj" />
+
+        <TextView
+            android:id="@+id/errorText"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:textColor="#E92728"
+            android:textColorHighlight="#8A55BE"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

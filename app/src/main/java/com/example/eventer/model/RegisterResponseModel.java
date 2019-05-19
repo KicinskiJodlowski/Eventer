@@ -1,29 +1,36 @@
 package com.example.eventer.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class RegisterResponseModel {
 
-    private String succeeded;
-    private String errorrs;
 
-    public RegisterResponseModel(String succeeded, String errorrs) {
+    private Boolean succeeded;
+    private List<Error> errors;
+
+    public RegisterResponseModel(Boolean succeeded, List<Error> errors) {
         this.succeeded = succeeded;
-        this.errorrs = errorrs;
+        this.errors = errors;
     }
 
-    public String getSucceeded() {
+    public Boolean getSucceeded() {
         return succeeded;
     }
 
-    public String getErrorrs() {
-        return errorrs;
+    public List<Error> getErrors() {
+        return errors;
     }
 
-    public void setSucceeded(String succeeded) {
+    public void setSucceeded(Boolean succeeded) {
         this.succeeded = succeeded;
     }
 
-    public void setErrorrs(String errorrs) {
-        this.errorrs = errorrs;
+    public void setErrors(List<Error> errors) {
+        this.errors = errors;
     }
     //    "succeeded":true,
 //    "errors":[]
@@ -34,6 +41,20 @@ public class RegisterResponseModel {
 //    {
 //        "code":"DuplicateUserName",
 //            "description":"User name 'Kamil' is already taken."
+//    },
+//    {
+//        "code":"PasswordTooShort",
+//        "description":"Passwords must be at least 6 characters."
+//    },
+//
+//    {
+//        "code":"PasswordRequiresLower",
+//            "description":"Passwords must have at least one lowercase ('a'-'z')."
+//    },
+//
+//    {
+//        "code":"PasswordRequiresUpper",
+//            "description":"Passwords must have at least one uppercase ('A'-'Z')."
 //    }
 //    ]
 }
