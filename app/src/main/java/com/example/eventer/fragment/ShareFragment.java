@@ -32,10 +32,11 @@ public class ShareFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Bundle bundle = this.getArguments();
         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
         Bitmap bitmap = null;
         try {
-            bitmap = barcodeEncoder.encodeBitmap("Bla bla", BarcodeFormat.QR_CODE, 600, 600);
+            bitmap = barcodeEncoder.encodeBitmap(bundle.getString("qrCode"), BarcodeFormat.QR_CODE, 600, 600);
         } catch (WriterException e) {
             e.printStackTrace();
         }

@@ -196,8 +196,12 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle arg = new Bundle();
-                TextToQrCode(eventD.getEventQRCode());
+                //TextToQrCode(eventD.getEventQRCode());
+                Bundle qrCode = new Bundle();
+                qrCode.putSerializable("qrCode", eventD.getEventQRCode());
+                ShareFragment shareFragment = new ShareFragment();
+                shareFragment.setArguments(qrCode);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, shareFragment).commit();
             }
         });
     }
