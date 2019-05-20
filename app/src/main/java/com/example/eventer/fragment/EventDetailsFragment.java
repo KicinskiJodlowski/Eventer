@@ -201,7 +201,8 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 qrCode.putSerializable("qrCode", eventD.getEventQRCode());
                 ShareFragment shareFragment = new ShareFragment();
                 shareFragment.setArguments(qrCode);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, shareFragment).commit();
+
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, shareFragment).addToBackStack(null).commit();
             }
         });
     }
