@@ -9,6 +9,7 @@ public class SharedPreferenceManager {
     private static SharedPreferences mSharedPref;
     public static final String TOKEN = "token";
     public static final String ID = "id";
+    public static final String FIREBASE_TOKEN = "registrationID";
 
     private SharedPreferenceManager()
     {

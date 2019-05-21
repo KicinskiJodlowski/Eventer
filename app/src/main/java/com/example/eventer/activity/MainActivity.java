@@ -50,11 +50,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = "MainActivity";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SharedPreferenceManager.init(getApplicationContext());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -160,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Toast.makeText(mainActivity, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     Toast.makeText(mainActivity, "Dodano do wydarzenia", Toast.LENGTH_LONG).show();
                 }
             }
@@ -199,8 +200,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void registerWithNotificationHubs() {
         if (checkPlayServices()) {
             // Start IntentService to register this application with FCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
+            //if (SharedPreferenceManager.read(SharedPreferenceManager.FIREBASE_TOKEN, "") == "") {
+                Intent intent = new Intent(this, RegistrationIntentService.class);
+                startService(intent);
+            //}
         }
     }
 
