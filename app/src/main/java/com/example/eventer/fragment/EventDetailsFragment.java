@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -71,7 +72,6 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         super.onViewCreated(view, savedInstanceState);
 
         eventD = (EventModel) getArguments().getSerializable("event");
-
         imageEvent = getActivity().findViewById(R.id.imageEvent);
         eventTitle = getActivity().findViewById(R.id.eventTitle);
         eventDesc = getActivity().findViewById(R.id.eventDesc);
@@ -184,8 +184,8 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
-                hour = c.get(Calendar.YEAR);
-                minute = c.get(Calendar.MONTH);
+                hour = c.get(Calendar.HOUR_OF_DAY);
+                minute = c.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), EventDetailsFragment.this,
                         hour, minute, true);

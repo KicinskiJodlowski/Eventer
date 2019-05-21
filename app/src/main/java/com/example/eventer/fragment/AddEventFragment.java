@@ -119,8 +119,8 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
-                hour = c.get(Calendar.YEAR);
-                minute = c.get(Calendar.MONTH);
+                hour = c.get(Calendar.HOUR_OF_DAY);
+                minute = c.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                         AddEventFragment.this,
@@ -177,12 +177,10 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
     private String convertToBase64() {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 5, baos);
         byte[] imageBytes = baos.toByteArray();
 
-        String base64 = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-
-        return base64;
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
 
