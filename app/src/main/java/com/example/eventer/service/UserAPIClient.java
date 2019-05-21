@@ -4,6 +4,7 @@ import com.example.eventer.model.EventJSONModel;
 import com.example.eventer.model.EventModel;
 import com.example.eventer.model.GuestModel;
 import com.example.eventer.model.LoginJSONModel;
+import com.example.eventer.model.QrCodeModel;
 import com.example.eventer.model.RegisterResponseModel;
 import com.example.eventer.model.TokenJSONModel;
 import com.example.eventer.model.UserJSONModel;
@@ -62,6 +63,13 @@ public interface UserAPIClient {
             @Header("Authorization") String authKey,
             @Body RequestBody params
     );
+
+    @Headers( { "Content-Type: application/json" } )
+    @POST("api/Event/inviteQR")
+    Call<String> addToEvent(
+            @Header("Authorization") String authKey,
+            @Body QrCodeModel qrCodeModel
+            );
 
 //    @POST("/api/Event")
 //    Call<EventJSONModel>  addEvent(@Body EventJSONModel event, @Header("Authorization") String authHeader);
