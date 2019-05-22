@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -256,15 +257,16 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
                     Toast.makeText(getActivity(), "Pobrano uczestników", Toast.LENGTH_SHORT).show();
 
-                    GuestRecordAdapter adapter = new GuestRecordAdapter(getActivity(), R.layout.guest_record, listGuests);
-                    listViewGuests.setAdapter(adapter);
-
                     ArrayList<GuestModel> guests = response.body();
 
                     for(GuestModel guest : guests)
                     {
                         listGuests.add(guest);
                     }
+
+                    GuestRecordAdapter adapter = new GuestRecordAdapter(getActivity(), R.layout.guest_record, listGuests);
+                    listViewGuests.setAdapter(adapter);
+                    setListViewHeightBasedOnChildren(listViewGuests);
                 }
                 else if(response.code() == 401) {
                     Toast.makeText(getActivity(), "Brak autoryzacji", Toast.LENGTH_SHORT).show();
@@ -280,7 +282,26 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
     private Bitmap convertToImage() {
