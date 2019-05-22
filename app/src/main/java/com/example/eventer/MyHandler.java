@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
+import com.example.eventer.activity.InitialActivity;
 import com.example.eventer.activity.MainActivity;
 import com.microsoft.windowsazure.notifications.NotificationsHandler;
 import com.microsoft.windowsazure.notifications.NotificationsManager;
@@ -30,8 +31,8 @@ public class MyHandler extends NotificationsHandler {
         ctx = context;
         String nhMessage = bundle.getString("message");
         sendNotification(nhMessage);
-        if (MainActivity.isVisible) {
-            MainActivity.mainActivity.ToastNotify(nhMessage);
+        if (InitialActivity.isVisible) {
+            InitialActivity.initialActivity.ToastNotify(nhMessage);
         }
     }
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.example.eventer.activity.InitialActivity;
 import com.example.eventer.activity.MainActivity;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.microsoft.windowsazure.messaging.NotificationHub;
@@ -82,8 +83,8 @@ public class RegistrationIntentService extends IntentService {
         }
 
         // Notify UI that registration has completed.
-        if (MainActivity.isVisible) {
-            MainActivity.mainActivity.ToastNotify(resultString);
+        if (InitialActivity.isVisible) {
+            InitialActivity.initialActivity.ToastNotify(resultString);
         }
     }
 }

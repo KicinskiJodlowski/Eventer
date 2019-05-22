@@ -4,6 +4,7 @@ import com.example.eventer.model.EventJSONModel;
 import com.example.eventer.model.EventModel;
 import com.example.eventer.model.GuestModel;
 import com.example.eventer.model.LoginJSONModel;
+import com.example.eventer.model.NotifyRegisterModel;
 import com.example.eventer.model.QrCodeModel;
 import com.example.eventer.model.RegisterResponseModel;
 import com.example.eventer.model.TokenJSONModel;
@@ -16,6 +17,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -71,11 +73,22 @@ public interface UserAPIClient {
             @Body QrCodeModel qrCodeModel
             );
 
-//    @POST("/api/Event")
-//    Call<EventJSONModel>  addEvent(@Body EventJSONModel event, @Header("Authorization") String authHeader);
+    //Notyfikacje
+    @GET ("api/notifications/register")
+    Call<String> getRegisterID(
+            @Header("Authorization") String authKey
+            );
 
-//    @GET("api/Event/GetProfile?id={id}")
-//    Call<UserProfile> getUser(@Path("id") String id, @Header("Authorization") String authHeader);
+    @PUT ("api/notifications/enable/{registerID}")
+    Call<ResponseBody> notifyRegister(
+            @Path("registerID") String registerID,
+            @Header("Authorization") String authKey,
+            @Body NotifyRegisterModel notifyRegistermodel
+    );
 
-
+    @DELETE ("api/notifications/unregister/{registerID}")
+    Call<ResponseBody> notifyUnregister(
+            @Path("registerID") String registerID,
+            @Header("Authorization") String authKey
+    );
 }

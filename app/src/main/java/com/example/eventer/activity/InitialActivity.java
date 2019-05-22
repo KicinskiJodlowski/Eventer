@@ -6,12 +6,18 @@ import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.eventer.MyHandler;
 import com.example.eventer.R;
+import com.example.eventer.RegistrationIntentService;
 import com.example.eventer.RetrofitClient;
 import com.example.eventer.SharedPreferenceManager;
 import com.example.eventer.fragment.LoginFragment;
 import com.example.eventer.model.EventModel;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
@@ -21,6 +27,10 @@ import retrofit2.Response;
 
 public class InitialActivity extends AppCompatActivity {
 
+    private static final String TAG = "InitialActivity";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    public static Boolean isVisible = false;
+    public static InitialActivity initialActivity;
 
     @Override
 
@@ -29,6 +39,10 @@ public class InitialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SharedPreferenceManager.init(getApplicationContext());
         Intent activityIntent;
+        //notification
+        initialActivity = this;
+        registerWithNotificationHubs();
+        MyHandler.createChannelAndHandleNotifications(getApplicationContext());
 
         if (checkTokenIsValid() == true) {
 
@@ -50,29 +64,51 @@ public class InitialActivity extends AppCompatActivity {
         if (session.equals("") || session == null) {
             return false;
         } else {
-            //SharedPreferenceManager.write(SharedPreferenceManager.TOKEN, "Bearer " +"JakiToZlyTokeneyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySUQiOiJhOTg4NTE5NS1hMTQzLTRhYTAtYjFhMS1iMzhjOGMzYWQ2MmMiLCJuYmYiOjE1NTgyNzQ5NjEsImV4cCI6MT");
-            return true;
-//            //tu spr czy rzuca unauthorized dla tego tokena
-//            Call<ArrayList<EventModel>> call = RetrofitClient.getInstance().getApi().getEvents(SharedPreferenceManager.read(SharedPreferenceManager.TOKEN,""));
-//            call.enqueue(new Callback<ArrayList<EventModel>>() {
-//                @Override
-//                public void onResponse(Call<ArrayList<EventModel>> call, Response<ArrayList<EventModel>> response) {
-//
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ArrayList<EventModel>> call, Throwable t) {
-////                    if (response.code() == 401 ){
-////                        SharedPreferenceManager.remove(SharedPreferenceManager.TOKEN);
-////                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerLogin, new LoginFragment()).commit();
-////                    }
-//                }
-//            });
-//            return true;
+            return true;//
         }
-//        return false;
+    }
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported by Google Play Services.");
+                ToastNotify("This device is not supported by Google Play Services.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
+    public void registerWithNotificationHubs() {
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with FCM.
+            //if (SharedPreferenceManager.read(SharedPreferenceManager.FIREBASE_TOKEN, "") == "") {
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+            //}
+        }
+    }
+    public void ToastNotify(final String notificationMessage) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(InitialActivity.this, notificationMessage, Toast.LENGTH_LONG).show();
+//                TextView helloText = (TextView) findViewById(R.id.text_hello);
+//                helloText.setText(notificationMessage);
+            }
+        });
+    }
 
 }
 

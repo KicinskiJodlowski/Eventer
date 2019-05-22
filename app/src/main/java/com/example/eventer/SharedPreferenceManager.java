@@ -3,13 +3,16 @@ package com.example.eventer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.View;
+import android.widget.TextView;
 
 public class SharedPreferenceManager {
 
     private static SharedPreferences mSharedPref;
     public static final String TOKEN = "token";
     public static final String ID = "id";
-    public static final String FIREBASE_TOKEN = "registrationID";
+    public static final String Login = "login";
+    public static final String RegisterID = "registerID";
 
     private SharedPreferenceManager()
     {
@@ -56,4 +59,5 @@ public class SharedPreferenceManager {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.putInt(key, value).apply();
     }
+
 }
