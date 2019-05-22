@@ -20,6 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
     ListView listViewGuests;
     public static ArrayList<GuestModel> listGuests;
     EditText eventTitle, eventDesc;
+    TextView eventCode;
     Button btnDate, btnTime, btnEdit, btnSave, btnShare, btnShow, btnHide;
     int day, month, year, hour, minute;
     ImageView imageEvent;
@@ -72,6 +74,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         imageEvent = getActivity().findViewById(R.id.imageEvent);
         eventTitle = getActivity().findViewById(R.id.eventTitle);
         eventDesc = getActivity().findViewById(R.id.eventDesc);
+        eventCode = getActivity().findViewById(R.id.eventCode);
         btnDate = getActivity().findViewById(R.id.eventStartDate);
         btnTime = getActivity().findViewById(R.id.eventStartTime);
         btnEdit = getActivity().findViewById(R.id.btnEdit);
@@ -83,6 +86,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
         eventTitle.setText(eventD.getEventName());
         eventDesc.setText(eventD.getDescription());
+        eventCode.setText(eventD.getEventQRCode());
         btnDate.setText(eventD.getDateOfEvent().substring(0, eventD.getDateOfEvent().indexOf('T')));
         btnTime.setText(eventD.getDateOfEvent().substring(eventD.getDateOfEvent().indexOf('T')+1));
 
