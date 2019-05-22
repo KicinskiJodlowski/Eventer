@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
                 break;
             case R.id.join_event:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new JoinFragment()).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.qrScanerContainer, new JoinFragment()).addToBackStack(null).commit();
 //                IntentIntegrator integrator = new IntentIntegrator(this);
 //                integrator.setOrientationLocked(false);
 //                integrator.setPrompt("Scan Event Code");

@@ -94,9 +94,6 @@ public class LoginFragment extends Fragment {
                     SharedPreferenceManager.write(SharedPreferenceManager.ID, userID);
                     userTOKEN = "Bearer " + response.body().getToken();
                     SharedPreferenceManager.write(SharedPreferenceManager.TOKEN, userTOKEN);
-                    //activityIntent = new Intent(getActivity(), MainActivity.class);
-                    //startActivity(activityIntent);
-                    //getActivity().finish();
 
                 } else {
                     Toast.makeText(getActivity(), "Login FAIL", Toast.LENGTH_SHORT).show();
@@ -112,29 +109,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void notificationRegister() {
-        //GET api/notifications/register get  registerID = 868706491613990126-1129693185868003113-2
-//        Call<String> call = RetrofitClient.getInstance().getApi().getRegisterID(SharedPreferenceManager.read(SharedPreferenceManager.TOKEN,""));
-//        call.enqueue(new Callback<String>() {
-//            @Override
-//            public void onResponse(Call<String> call, Response<String> response) {
-//                if (response.code() == 400) {
-//                    try {
-//                        Toast.makeText(getActivity(), response.errorBody().string(), Toast.LENGTH_LONG).show();
-//                    } catch (IOException e) {
-//                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//                if (response.code() == 200) {
-//                    SharedPreferenceManager.write(SharedPreferenceManager.RegisterID, response.body().substring(1,response.body().length()-1));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<String> call, Throwable t) {
-//                Toast.makeText(getActivity(),"Nie udało się zarejestrować w usłudze notyfikacji", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
         SharedPreferences sharedPreferences;
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(initialActivity.getApplicationContext());
         NotifyRegisterModel notifyRegisterModel = new NotifyRegisterModel(sharedPreferences.getString("FCMtoken", null));
@@ -158,13 +132,7 @@ public class LoginFragment extends Fragment {
                 Log.d("RegID", "Failure request");
             }
         });
-        Toast.makeText(getActivity(), call2.toString(), Toast.LENGTH_LONG).show();
-        //PUT api/notifications/enable/{registerID}
-//        {
-//            "Platform":"gcm",
-//                "Handle":"di4QGaaWBo0:APA91bHl5DZna0Kx8cfN2xDvNGocvFkoxw0wsl6YU2hT0vHIrT87_gtouxM6sNdBx2E5vFfjQBM68BkkdsdFwzbyvxeHblBrPULwfND_vflfmDjj7JoZJQ-q-tM8GkndIlFjinKfF-5P",
-//                "Tags":["Rafal"]
-//        }
+
     }
 
 }
