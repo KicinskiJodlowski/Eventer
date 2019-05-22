@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -49,7 +48,7 @@ import retrofit2.Response;
 
 public class EventDetailsFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
-    EventModel eventD;
+    EventModel eventPart, eventFull;
     ListView listViewGuests;
     public static ArrayList<GuestModel> listGuests;
     EditText eventTitle, eventDesc;
@@ -70,7 +69,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        eventD = (EventModel) getArguments().getSerializable("event");
+        eventPart = (EventModel) getArguments().getSerializable("event");
         imageEvent = getActivity().findViewById(R.id.imageEvent);
         eventTitle = getActivity().findViewById(R.id.eventTitle);
         eventDesc = getActivity().findViewById(R.id.eventDesc);
@@ -84,23 +83,10 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         btnHide = getActivity().findViewById(R.id.btnHideGuests);
         listViewGuests = getActivity().findViewById(R.id.listGuests);
 
-        eventTitle.setText(eventD.getEventName());
-        eventDesc.setText(eventD.getDescription());
-        eventCode.setText(eventD.getEventQRCode());
-        btnDate.setText(eventD.getDateOfEvent().substring(0, eventD.getDateOfEvent().indexOf('T')));
-        btnTime.setText(eventD.getDateOfEvent().substring(eventD.getDateOfEvent().indexOf('T')+1));
-
-        if(eventD.getImgURL() != null)
-        {
-            imageBase64 = eventD.getImgURL();
-            bitmap = convertToImage();
-            imageEvent.setImageBitmap(bitmap);
-        }
-
-        if(eventD.getOwnerID().contentEquals(SharedPreferenceManager.read(SharedPreferenceManager.ID,"")))
-        {
-            btnEdit.setVisibility(View.VISIBLE);
-        }
+        eventTitle.setText(eventPart.getEventName());
+        eventDesc.setText(eventPart.getDescription());
+        btnDate.setText(eventPart.getDateOfEvent().substring(0, eventPart.getDateOfEvent().indexOf('T')));
+        btnTime.setText(eventPart.getDateOfEvent().substring(eventPart.getDateOfEvent().indexOf('T')+1));
 
         btnShow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +145,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
                 for (EventModel event: MyEventsFragment.listEvents)
                 {
-                    if(event.getEventId() == eventD.getEventId()) {
+                    if(event.getEventId() == eventPart.getEventId()) {
 
                         updateEvent();
                     }
@@ -194,23 +180,71 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
             }
         });
 
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TextToQrCode(eventD.getEventQRCode());
-                Bundle qrCode = new Bundle();
-                qrCode.putSerializable("qrCode", eventD.getEventQRCode());
-                ShareFragment shareFragment = new ShareFragment();
-                shareFragment.setArguments(qrCode);
+        getEvent();
+    }
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, shareFragment).addToBackStack(null).commit();
+    private void getEvent() {
+
+        Call<EventModel> call = RetrofitClient.getInstance().getApi().getEvent(eventPart.getEventId(),SharedPreferenceManager.read(SharedPreferenceManager.TOKEN,""));
+
+        call.enqueue(new Callback<EventModel>() {
+            @Override
+            public void onResponse(Call<EventModel> call, Response<EventModel> response) {
+
+                Log.d("Response Code ", Integer.toString(response.code()));
+
+                if(response.code() == 200) {
+                    Toast.makeText(getActivity(), "Pobrano szczegóły wydarzenia", Toast.LENGTH_SHORT).show();
+                    eventFull = response.body();
+
+                    if(eventFull.getOwnerID().contentEquals(SharedPreferenceManager.read(SharedPreferenceManager.ID,"")))
+                    {
+                        btnEdit.setVisibility(View.VISIBLE);
+                    }
+
+                    btnShare.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //TextToQrCode(eventPart.getEventQRCode());
+                            Bundle qrCode = new Bundle();
+                            qrCode.putSerializable("qrCode", eventFull.getEventQRCode());
+                            ShareFragment shareFragment = new ShareFragment();
+                            shareFragment.setArguments(qrCode);
+
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, shareFragment).addToBackStack(null).commit();
+                        }
+                    });
+
+                    if(eventFull.getImgURL() != null)
+                    {
+                        imageBase64 = eventFull.getImgURL();
+                        bitmap = convertToImage();
+                        imageEvent.setImageBitmap(bitmap);
+                    }
+
+                    eventCode.setText(eventFull.getEventQRCode());
+
+
+                }
+                else if(response.code() == 401) {
+                    Toast.makeText(getActivity(), "Brak autoryzacji", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getActivity(), "Wystąpił błąd! Nie udało się pobrać uczestników.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EventModel> call, Throwable t) {
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     private void getGuests() {
 
-        Call<ArrayList<GuestModel>> call = RetrofitClient.getInstance().getApi().getGuests(eventD.getEventId(),SharedPreferenceManager.read(SharedPreferenceManager.TOKEN,""));
+        Call<ArrayList<GuestModel>> call = RetrofitClient.getInstance().getApi().getGuests(eventPart.getEventId(),SharedPreferenceManager.read(SharedPreferenceManager.TOKEN,""));
 
         call.enqueue(new Callback<ArrayList<GuestModel>>() {
             @Override
@@ -218,14 +252,19 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
                 Log.d("Response Code ", Integer.toString(response.code()));
 
-                Toast.makeText(getActivity(), response.body().toString(), Toast.LENGTH_SHORT).show();
-
                 if(response.code() == 200) {
 
                     Toast.makeText(getActivity(), "Pobrano uczestników", Toast.LENGTH_SHORT).show();
 
                     GuestRecordAdapter adapter = new GuestRecordAdapter(getActivity(), R.layout.guest_record, listGuests);
                     listViewGuests.setAdapter(adapter);
+
+                    ArrayList<GuestModel> guests = response.body();
+
+                    for(GuestModel guest : guests)
+                    {
+                        listGuests.add(guest);
+                    }
                 }
                 else if(response.code() == 401) {
                     Toast.makeText(getActivity(), "Brak autoryzacji", Toast.LENGTH_SHORT).show();
@@ -233,15 +272,6 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
                 else {
                     Toast.makeText(getActivity(), "Wystąpił błąd! Nie udało się pobrać uczestników.", Toast.LENGTH_SHORT).show();
-                }
-
-
-                ArrayList<GuestModel> guests = response.body();
-
-                for(GuestModel guest : guests)
-                {
-                    //if(event.getEventName() == null) event.setEventName("BRAK NAZWY"); // to prevent error with events with no title
-                    listGuests.add(guest); //tested - OK
                 }
             }
 
@@ -266,15 +296,15 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
         String title, date, desc, imgURL, ownerId, qrCode, jobIdScheduler;
         List<InvitedGuest> guests;
 
-        eventId = eventD.getEventId();
+        eventId = eventPart.getEventId();
         title = eventTitle.getText().toString().trim();
         date = btnDate.getText().toString().trim() + " " + btnTime.getText().toString().trim();
         desc = eventDesc.getText().toString().trim();
-        imgURL = eventD.getImgURL();
-        qrCode = eventD.getEventQRCode();
-        jobIdScheduler = eventD.getJobIDscheduler();
-        ownerId = eventD.getOwnerID();
-        guests = eventD.getInvitedGuests();
+        imgURL = eventFull.getImgURL();
+        qrCode = eventFull.getEventQRCode();
+        jobIdScheduler = eventFull.getJobIDscheduler();
+        ownerId = eventFull.getOwnerID();
+        guests = eventFull.getInvitedGuests();
 
         Map<String, Object> jsonParams = new ArrayMap<>();
         jsonParams.put("eventId", eventId);
@@ -289,7 +319,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(jsonParams)).toString());
 
-        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().updateEvent(eventD.getEventId(), LoginFragment.userTOKEN, body);
+        Call<ResponseBody> call = RetrofitClient.getInstance().getApi().updateEvent(eventPart.getEventId(), LoginFragment.userTOKEN, body);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -300,6 +330,9 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
                 if(response.code() == 204) {
                     Toast.makeText(getActivity(),"Zmiany zostały zapisane",Toast.LENGTH_SHORT).show();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
+                }
+                else if(response.code() == 401) {
+                    Toast.makeText(getActivity(), "Brak autoryzacji", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getActivity(), "Wystąpił błąd! Upewnij się, że wprowadzono nazwę oraz wybrano datę", Toast.LENGTH_SHORT).show();

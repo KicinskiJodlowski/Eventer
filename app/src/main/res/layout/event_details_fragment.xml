@@ -103,47 +103,6 @@
                 android:inputType="textMultiLine"
                 android:scrollbars="vertical" />
 
-            <Button
-                android:id="@+id/btnShowGuests"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:backgroundTint="@android:color/holo_orange_dark"
-                android:text="Pokaż listę uczestników"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/btnHideGuests"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:backgroundTint="@android:color/holo_orange_dark"
-                android:text="Ukryj listę uczestników"
-                android:textColor="@android:color/white"
-                android:visibility="gone"/>
-
-            <ListView
-                android:id="@+id/listGuests"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true" ></ListView>
-
-            <Button
-                android:id="@+id/btnEdit"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:backgroundTint="@android:color/holo_green_dark"
-                android:text="Edytuj"
-                android:textColor="@android:color/white"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/btnSave"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:backgroundTint="@android:color/holo_blue_dark"
-                android:text="Zapisz zmiany"
-                android:textColor="@android:color/white"
-                android:visibility="gone" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,7 +119,47 @@
                 android:inputType="textPersonName"
                 android:textAlignment="center"
                 android:textStyle="bold"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/btnShowGuests"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:text="Pokaż listę uczestników"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btnHideGuests"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:text="Ukryj listę uczestników"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/listGuests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnEdit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_green_dark"
+                android:text="Edytuj"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@android:color/holo_blue_dark"
+                android:text="Zapisz zmiany"
+                android:textColor="@android:color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnShare"
@@ -168,8 +167,7 @@
                 android:layout_height="50dp"
                 android:backgroundTint="@android:color/holo_blue_dark"
                 android:text="Udostępnij wydarzenie"
-                android:textColor="@android:color/white"
-                />
+                android:textColor="@android:color/white" />
 
     </LinearLayout>
 </ScrollView>

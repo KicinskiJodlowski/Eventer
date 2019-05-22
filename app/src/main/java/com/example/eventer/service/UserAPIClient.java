@@ -51,6 +51,12 @@ public interface UserAPIClient {
             @Header("Authorization") String authKey
     );
 
+    @GET("api/Event/{id}")
+    Call<EventModel> getEvent(
+            @Path("id") int id,
+            @Header("Authorization") String authKey
+    );
+
     @Headers( { "Content-Type: application/json" } )
     @PUT("api/Event/{id}")
     Call<ResponseBody> updateEvent(
