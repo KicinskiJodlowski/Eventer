@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 import com.example.eventer.R;
 import com.example.eventer.RetrofitClient;
 import com.example.eventer.SharedPreferenceManager;
-import com.example.eventer.adapter.EventRecordAdapter;
 import com.example.eventer.adapter.GuestRecordAdapter;
 import com.example.eventer.model.EventModel;
 import com.example.eventer.model.GuestModel;
@@ -37,7 +35,6 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -215,7 +212,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
             @Override
             public void onResponse(Call<ArrayList<GuestModel>> call, Response<ArrayList<GuestModel>> response) {
 
-                Log.d("Response Code: ", Integer.toString(response.code()));
+                Log.d("Response Code ", Integer.toString(response.code()));
 
                 Toast.makeText(getActivity(), response.body().toString(), Toast.LENGTH_SHORT).show();
 
@@ -225,6 +222,9 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
 
                     GuestRecordAdapter adapter = new GuestRecordAdapter(getActivity(), R.layout.guest_record, listGuests);
                     listViewGuests.setAdapter(adapter);
+                }
+                else if(response.code() == 401) {
+                    Toast.makeText(getActivity(), "Brak autoryzacji", Toast.LENGTH_SHORT).show();
                 }
 
                 else {
@@ -291,7 +291,7 @@ public class EventDetailsFragment extends Fragment implements DatePickerDialog.O
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                Log.d("Response code: ", Integer.toString(response.code()));
+                Log.d("Response code ", Integer.toString(response.code()));
 
                 if(response.code() == 204) {
                     Toast.makeText(getActivity(),"Zmiany zostały zapisane",Toast.LENGTH_SHORT).show();

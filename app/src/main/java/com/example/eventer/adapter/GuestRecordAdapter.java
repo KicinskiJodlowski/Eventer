@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.eventer.R;
-import com.example.eventer.model.EventModel;
 import com.example.eventer.model.GuestModel;
 
 import java.util.ArrayList;

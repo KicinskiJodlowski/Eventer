@@ -62,7 +62,7 @@ public class MyEventsFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<EventModel>> call, Response<ArrayList<EventModel>> response) {
 
-                Log.d("Response Code: ", Integer.toString(response.code()));
+                Log.d("Response Code ", Integer.toString(response.code()));
                 if (response.code() == 200) {
 
                     Toast.makeText(getActivity(), "Pobrano wydarzenia", Toast.LENGTH_SHORT).show();
@@ -78,8 +78,7 @@ public class MyEventsFragment extends Fragment {
                     ArrayList<EventModel> events = response.body();
 
                     for (EventModel event : events) {
-                        //if(event.getEventName() == null) event.setEventName("BRAK NAZWY"); // to prevent error with events with no title
-                        listEvents.add(event); //tested - OK
+                        listEvents.add(event);
                     }
                 } else {
                     Toast.makeText(getActivity(), "Wystąpił błąd! Nie udało się pobrać wydarzeń.", Toast.LENGTH_SHORT).show();

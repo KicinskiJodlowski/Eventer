@@ -42,9 +42,13 @@ public class EventRecordAdapter extends ArrayAdapter<EventModel> {
         TextView eventDesc = convertView.findViewById(R.id.textEventDesc);
 
         eventTitle.setText(title);
-        eventDate.setText(date.substring(0, date.indexOf("T")) + " " + date.substring(date.indexOf("T")+1));
+        String tmpDate = date.substring(0, date.indexOf("T")) + " " + date.substring(date.indexOf("T")+1);
+        eventDate.setText(tmpDate);
         if( desc.length() > 75)
-            eventDesc.setText(desc.substring(0,75)+"...");
+        {
+            String tmpDesc = desc.substring(0,75)+"...";
+            eventDesc.setText(tmpDesc);
+        }
         else
             eventDesc.setText(desc);
 

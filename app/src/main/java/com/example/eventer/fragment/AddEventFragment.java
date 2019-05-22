@@ -192,11 +192,11 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
 
     private void addEvent()
     {
-        String title, date, desc, imgURL;
+        String title, date, desc, imgURL = "";
         title = textEventTitle.getText().toString().trim();
         date = btnDatePick.getText().toString().trim() + " " + btnTimePick.getText().toString().trim();
         desc = textEventDesc.getText().toString().trim();
-        imgURL = convertToBase64();
+        if(bitmap != null) imgURL = convertToBase64();
 
         Map<String, Object> jsonParams = new ArrayMap<>();
         jsonParams.put("eventName", title);
@@ -212,11 +212,14 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                Log.d("RESPONSE CODE --> ", Integer.toString(response.code()));
+                Log.d("RESPONSE CODE", Integer.toString(response.code()));
 
                 if(response.code() == 201) {
                     Toast.makeText(getActivity(), "Dodano nowe wydarzenie", Toast.LENGTH_SHORT).show();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
+                }
+                else if(response.code() == 401) {
+                    Toast.makeText(getActivity(), "Brak autoryzacji", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getActivity(), "Wystąpił błąd! Upewnij się, że wprowadzono nazwę oraz wybrano datę", Toast.LENGTH_SHORT).show();
