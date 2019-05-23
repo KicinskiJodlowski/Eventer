@@ -64,7 +64,6 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
 
     Uri imageUri;
 
-    String imageBase64;
     Bitmap bitmap;
 
     @Nullable
@@ -77,13 +76,7 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        imageEvent = getActivity().findViewById(R.id.imageEvent);
-        btnAddPhoto = getActivity().findViewById(R.id.btnAddPhoto);
-        btnDatePick = getActivity().findViewById(R.id.eventStartDate);
-        btnTimePick = getActivity().findViewById(R.id.eventStartTime);
-        btnAddEvent = getActivity().findViewById(R.id.btnAddEvent);
-        textEventTitle = getActivity().findViewById(R.id.eventTitle);
-        textEventDesc = getActivity().findViewById(R.id.eventDesc);
+        initViews();
 
         btnAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +124,16 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
         });
     }
 
+    private void initViews() {
+        imageEvent = getActivity().findViewById(R.id.imageEvent);
+        btnAddPhoto = getActivity().findViewById(R.id.btnAddPhoto);
+        btnDatePick = getActivity().findViewById(R.id.eventStartDate);
+        btnTimePick = getActivity().findViewById(R.id.eventStartTime);
+        btnAddEvent = getActivity().findViewById(R.id.btnAddEvent);
+        textEventTitle = getActivity().findViewById(R.id.eventTitle);
+        textEventDesc = getActivity().findViewById(R.id.eventDesc);
+    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String validMonth, validDay;
@@ -158,13 +161,11 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK && requestCode == PICK_IMAGE)
         {
             imageUri = data.getData();
-
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imageUri);
                 imageEvent.setImageBitmap(bitmap);
@@ -174,29 +175,28 @@ public class AddEventFragment extends Fragment implements DatePickerDialog.OnDat
         }
     }
 
-    private String convertToBase64() {
+    public String convertToBase64(Bitmap bmap) {
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 5, baos);
-        byte[] imageBytes = baos.toByteArray();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bmap.compress(Bitmap.CompressFormat.JPEG, 5, stream);
+        byte[] imageBytes = stream.toByteArray();
 
         return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
 
-    private void openGallery()
-    {
+    public void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
-    private void addEvent()
-    {
+    private void addEvent() {
+
         String title, date, desc, imgURL = "";
         title = textEventTitle.getText().toString().trim();
         date = btnDatePick.getText().toString().trim() + " " + btnTimePick.getText().toString().trim();
         desc = textEventDesc.getText().toString().trim();
-        if(bitmap != null) imgURL = convertToBase64();
+        if(bitmap != null) imgURL = convertToBase64(bitmap);
 
         Map<String, Object> jsonParams = new ArrayMap<>();
         jsonParams.put("eventName", title);

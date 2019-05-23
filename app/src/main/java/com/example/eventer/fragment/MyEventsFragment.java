@@ -64,23 +64,9 @@ public class MyEventsFragment extends Fragment {
 
                 Log.d("Response Code ", Integer.toString(response.code()));
                 if (response.code() == 200) {
-
-                    Toast.makeText(getActivity(), "Pobrano wydarzenia", Toast.LENGTH_SHORT).show();
-
-                    EventRecordAdapter adapter = new EventRecordAdapter(getActivity(), R.layout.event_record, listEvents);
-                    listViewEvents.setAdapter(adapter);
-                    listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                            showEventDetails(position);
-                        }
-                    });
-                    ArrayList<EventModel> events = response.body();
-
-                    for (EventModel event : events) {
-                        listEvents.add(event);
-                    }
-                } else {
+                    showEvents(response);
+                }
+                else {
                     Toast.makeText(getActivity(), "Wystąpił błąd! Nie udało się pobrać wydarzeń.", Toast.LENGTH_SHORT).show();
                     if (response.code() == 401) {
                         SharedPreferences sharedPreferences;
@@ -116,6 +102,21 @@ public class MyEventsFragment extends Fragment {
 
     }
 
+    private void showEvents(Response<ArrayList<EventModel>> response) {
+        Toast.makeText(getActivity(), "Pobrano wydarzenia", Toast.LENGTH_SHORT).show();
+        ArrayList<EventModel> events = response.body();
+        listEvents.addAll(events);
+
+        EventRecordAdapter adapter = new EventRecordAdapter(getActivity(), R.layout.event_record, listEvents);
+        listViewEvents.setAdapter(adapter);
+        listViewEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                showEventDetails(position);
+            }
+        });
+    }
+
     private void showEventDetails(int position) {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -123,8 +124,8 @@ public class MyEventsFragment extends Fragment {
 
         Bundle arg = new Bundle();
         arg.putSerializable("event", listEvents.get(position));
-
         detailsFragment.setArguments(arg);
+
         ft.replace(R.id.fragment_container, detailsFragment);
         ft.addToBackStack(null);
         ft.commit();
