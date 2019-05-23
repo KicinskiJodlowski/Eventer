@@ -12,7 +12,6 @@
         android:layout_centerInParent="true"
         android:background="#B81212"
         android:visibility="visible"
-        app:srcCompat="@mipmap/ic_launcher"
         tools:visibility="visible" />
 
 </RelativeLayout>
