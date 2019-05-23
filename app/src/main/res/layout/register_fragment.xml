@@ -54,17 +54,15 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Login"
-            android:inputType="textPersonName"
-            android:text="Rafal" />
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/fullNameText"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"
-            android:inputType="textPersonName"
-            android:text="Rafał Budny" />
+            android:hint="Imie i Nazwisko"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/mailText"
@@ -72,26 +70,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="e-mail"
-            android:inputType="textEmailAddress"
-            android:text="rafal@budny.pl" />
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/passwordText"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:text="Rafal12345@" />
+            android:hint="Hasło"
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/passwordRepeatText"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repeat Password"
-            android:inputType="textPassword"
-            android:text="Rafal12345@" />
+            android:hint="Powtórz hasło"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/loginButton"
