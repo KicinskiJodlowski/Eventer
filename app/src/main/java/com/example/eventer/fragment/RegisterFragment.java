@@ -81,13 +81,14 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onResponse(Call<RegisterResponseModel> call, Response<RegisterResponseModel> response) {
                 List<Error> errors = response.body().getErrors();
+                if(errors.size()==0){
                 errorText.setText("");
-                String errorTmp = "";
                 for (Error e : errors) {
-                    //errorTmp+= (e.getDescription() + "\n");
                     errorText.append(e.getDescription()+ "\n");
+                }}else {
+                    Toast.makeText(getActivity(),"Pomyślnie zarejestrowano użytkownika - możesz się teraz zalogować.", Toast.LENGTH_LONG).show())
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerLogin, new LoginFragment()).commit();
                 }
-                //errorText.setText(errorTmp);
             }
 
             @Override
