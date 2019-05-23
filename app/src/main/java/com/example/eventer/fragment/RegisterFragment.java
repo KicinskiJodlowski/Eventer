@@ -86,7 +86,7 @@ public class RegisterFragment extends Fragment {
                 for (Error e : errors) {
                     errorText.append(e.getDescription()+ "\n");
                 }}else {
-                    Toast.makeText(getActivity(),"Pomyślnie zarejestrowano użytkownika - możesz się teraz zalogować.", Toast.LENGTH_LONG).show())
+                    Toast.makeText(getActivity(),"Pomyślnie zarejestrowano użytkownika - możesz się teraz zalogować.", Toast.LENGTH_LONG).show();
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerLogin, new LoginFragment()).commit();
                 }
             }
