@@ -27,29 +27,7 @@
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/qrScanerContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="550dp">
-
-                </FrameLayout>
-
-                <FrameLayout
-                    android:id="@+id/qrInputContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                </FrameLayout>
-            </LinearLayout>
-
-        </FrameLayout>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

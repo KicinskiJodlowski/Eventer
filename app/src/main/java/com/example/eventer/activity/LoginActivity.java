@@ -28,23 +28,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-//    Retrofit.Builder builder = new Retrofit.Builder()
-//            .baseUrl("https://neweventer.azurewebsites.net")
-//            .addConverterFactory(GsonConverterFactory.create());
-//    Retrofit retrofit = builder.build();
-//    UserAPIClient userAPIClient = retrofit.create(UserAPIClient.class);
-//    SharedPreferences token;
-//    SharedPreferences.Editor editor;
-//    Intent activityIntent;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerLogin, new LoginFragment()).commit();
-
-
 
     }
 
@@ -54,33 +42,4 @@ public class LoginActivity extends AppCompatActivity {
         return super.onCreateView(name, context, attrs);
     }
 
-//    private void login() {
-//        LoginJSONModel login = new LoginJSONModel(((TextView) findViewById(R.id.userNameText)).getText().toString(), ((TextView) findViewById(R.id.passwordText)).getText().toString());
-//        Call<TokenJSONModel> call = userAPIClient.login(login);
-//        call.enqueue(new Callback<TokenJSONModel>() {
-//            @Override
-//            public void onResponse(Call<TokenJSONModel> call, Response<TokenJSONModel> response) {
-//                if (response.isSuccessful()) {
-//                    Toast.makeText(LoginActivity.this, response.body().getToken(), Toast.LENGTH_SHORT).show();
-//                    //tu zapisac token do SP i zakonczyc activity
-//                    token = getSharedPreferences("token", Context.MODE_PRIVATE);
-//                    editor = token.edit();
-//                    editor.putString("token", response.body().getToken());
-//                    editor.commit();
-//                    activityIntent = new Intent(LoginActivity.this, MainActivity.class);
-//                    startActivity(activityIntent);
-//                    finish();
-//
-//                } else {
-//                    Toast.makeText(LoginActivity.this, "Login FAIL", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<TokenJSONModel> call, Throwable t) {
-//                Toast.makeText(LoginActivity.this, "failure", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 }

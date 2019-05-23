@@ -1,7 +1,5 @@
 package com.example.eventer.fragment;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,14 +18,12 @@ import android.widget.Toast;
 import com.example.eventer.R;
 import com.example.eventer.RetrofitClient;
 import com.example.eventer.SharedPreferenceManager;
-import com.example.eventer.activity.InitialActivity;
 import com.example.eventer.activity.MainActivity;
 import com.example.eventer.model.LoginJSONModel;
 import com.example.eventer.model.NotifyRegisterModel;
 import com.example.eventer.model.TokenJSONModel;
 import com.example.eventer.service.UserAPIClient;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import okhttp3.ResponseBody;
@@ -106,6 +102,7 @@ public class LoginFragment extends Fragment {
                 Toast.makeText(getActivity(), "Login failure", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     private void notificationRegister() {
@@ -113,8 +110,8 @@ public class LoginFragment extends Fragment {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(initialActivity.getApplicationContext());
         NotifyRegisterModel notifyRegisterModel = new NotifyRegisterModel(sharedPreferences.getString("FCMtoken", null));
 
-        Call<ResponseBody> call2 = RetrofitClient.getInstance().getApi().notifyRegister(sharedPreferences.getString("registrationID",""),
-                SharedPreferenceManager.read(SharedPreferenceManager.TOKEN,""), notifyRegisterModel);
+        Call<ResponseBody> call2 = RetrofitClient.getInstance().getApi().notifyRegister(sharedPreferences.getString("registrationID", ""),
+                SharedPreferenceManager.read(SharedPreferenceManager.TOKEN, ""), notifyRegisterModel);
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -123,8 +120,7 @@ public class LoginFragment extends Fragment {
                     activityIntent = new Intent(getActivity(), MainActivity.class);
                     startActivity(activityIntent);
                     //getActivity().finish();
-                }
-                else Log.d("RegID", "Rejestracja do notyfikacji nieudana");
+                } else Log.d("RegID", "Rejestracja do notyfikacji nieudana");
             }
 
             @Override
@@ -132,7 +128,6 @@ public class LoginFragment extends Fragment {
                 Log.d("RegID", "Failure request");
             }
         });
-
     }
 
 }

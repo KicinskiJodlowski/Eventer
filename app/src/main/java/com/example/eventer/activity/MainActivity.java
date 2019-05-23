@@ -1,7 +1,9 @@
 package com.example.eventer.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -11,8 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eventer.R;
@@ -23,8 +28,10 @@ import com.example.eventer.fragment.JoinFragment;
 import com.example.eventer.fragment.MyEventsFragment;
 import com.example.eventer.fragment.SettingsFragment;
 import com.example.eventer.model.QrCodeModel;
+import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.CaptureActivity;
 
 import java.io.IOException;
 
@@ -35,7 +42,7 @@ import retrofit2.Response;
 
 import static com.example.eventer.activity.InitialActivity.initialActivity;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
 
     @Override
@@ -45,10 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferenceManager.init(getApplicationContext());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
-
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -59,7 +62,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
             navigationView.setCheckedItem(R.id.my_events);
         }
+
+        TextView msg = navigationView.getHeaderView(0).findViewById(R.id.welcomeMessage);
+        msg.setText("Witaj "+SharedPreferenceManager.read(SharedPreferenceManager.Login,"")+"!");
     }
+
 
     @Override
     public void onBackPressed() {
@@ -80,17 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MyEventsFragment()).commit();
                 break;
             case R.id.join_event:
-                getSupportFragmentManager().beginTransaction().replace(R.id.qrScanerContainer, new JoinFragment()).addToBackStack(null).commit();
-//                IntentIntegrator integrator = new IntentIntegrator(this);
-//                integrator.setOrientationLocked(false);
-//                integrator.setPrompt("Scan Event Code");
-//                //do wyłączenie później
-//                integrator.setBeepEnabled(true);
-//                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
-//                integrator.setBarcodeImageEnabled(true);
-//                integrator.initiateScan();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new JoinFragment()).addToBackStack(null).commit();
                 break;
-
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                 break;
@@ -142,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
     private void joinEventByQr(String qrCode) {
         QrCodeModel qrCodeModel = new QrCodeModel(qrCode);
         Call<String> call = RetrofitClient.getInstance().getApi().addToEvent(SharedPreferenceManager.read(SharedPreferenceManager.TOKEN, ""), qrCodeModel);
@@ -166,11 +165,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
-
-
-
-
-
-
-
 }

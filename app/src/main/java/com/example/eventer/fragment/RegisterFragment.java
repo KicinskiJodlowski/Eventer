@@ -1,13 +1,19 @@
 package com.example.eventer.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +26,7 @@ import com.example.eventer.model.RegisterResponseModel;
 import com.example.eventer.model.UserJSONModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,9 +37,9 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.register_fragment, container,false);
+        return rootView;
 
-
-        return inflater.inflate(R.layout.register_fragment, container, false);
     }
 
     @Override
@@ -55,7 +62,7 @@ public class RegisterFragment extends Fragment {
         registerUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 if (passwordRepeatText.toString().equals(passwordText.toString())) {
                     registerOnClick();
                 } else errorText.setText("Podane hasła nie są tożsame.");
@@ -73,7 +80,6 @@ public class RegisterFragment extends Fragment {
         call.enqueue(new Callback<RegisterResponseModel>() {
             @Override
             public void onResponse(Call<RegisterResponseModel> call, Response<RegisterResponseModel> response) {
-                //Toast.makeText(getActivity(), response.body().getErrors().toString(), Toast.LENGTH_SHORT).show();
                 List<Error> errors = response.body().getErrors();
                 errorText.setText("");
                 String errorTmp = "";
@@ -89,6 +95,5 @@ public class RegisterFragment extends Fragment {
                 Toast.makeText(getActivity(), "Register failure", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

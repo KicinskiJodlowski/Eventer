@@ -12,7 +12,6 @@ public class SharedPreferenceManager {
     public static final String TOKEN = "token";
     public static final String ID = "id";
     public static final String Login = "login";
-    public static final String RegisterID = "registerID";
 
     private SharedPreferenceManager()
     {
